@@ -24,45 +24,45 @@ include_once "include/session.php";
 
         <!-- SLIDE DOWN EFFECT ON PRODUCTS, CATEGORIES, ORDERS  -->
         <script type="text/javascript">
-            
-            $(document).ready(function() 
+
+            $(document).ready(function()
             {
-                    var pressed = false; 
-                    var chars = []; 
-                    $(window).keypress(function(e) 
+                    var pressed = false;
+                    var chars = [];
+                    $(window).keypress(function(e)
                     {
-                        if (e.which >= 48 && e.which <= 57) 
+                        if (e.which >= 48 && e.which <= 57)
                         {
                             chars.push(String.fromCharCode(e.which));
                         }
-                        
+
                         console.log(e.which + ":" + chars.join("|"));
-                        if (pressed == false) 
+                        if (pressed == false)
                         {
                             setTimeout(function()
                             {
                                 // check we have a long length e.g. it is a barcode
-                                if (chars.length >= 10) 
+                                if (chars.length >= 10)
                                 {
                                     var barcode = chars.join("");
                                     console.log("Barcode Scanned: " + barcode);
                                     $("#prod_barcode").val(barcode);
                                 }
-                                
+
                                 chars = [];
                                 pressed = false;
-                                
+
                             },500);
                         }
-                        
+
                         pressed = true;
                     });
             });
-            
-            $(function () 
+
+            $(function ()
             {
                 $(this).find('.panel-footer').show();
-                
+
                 /*
                     This code will determine when a code has been either entered manually or
                     entered using a scanner.
@@ -77,17 +77,17 @@ include_once "include/session.php";
                 var minChars = 3;
 
                 // handle a key value being entered by either keyboard or scanner
-                $("#prod_barcode").keypress(function (e) 
+                $("#prod_barcode").keypress(function (e)
                 {
                     //alert("Hi");
                     // restart the timer
-                    if (timing) 
+                    if (timing)
                     {
                         clearTimeout(timing);
                     }
 
                     // handle the key event
-                    if (e.which == 13) 
+                    if (e.which == 13)
                     {
                         // Enter key was entered
                         // don't submit the form
@@ -100,7 +100,7 @@ include_once "include/session.php";
                             inputComplete();
                         }
                     }
-                    else 
+                    else
                     {
                         // some other key value was entered
                         // could be the last character
@@ -111,7 +111,7 @@ include_once "include/session.php";
                         userFinishedEntering = false;
 
                         // is this the first character?
-                        if (!inputStart) 
+                        if (!inputStart)
                         {
                             firstKey = e.which;
                             inputStart = inputStop;
@@ -138,13 +138,13 @@ include_once "include/session.php";
 
 
                 // reset the page
-                $("#reset").click(function (e) 
+                $("#reset").click(function (e)
                 {
                     e.preventDefault();
                     resetValues();
                 });
 
-                function resetValues() 
+                function resetValues()
                 {
                     // clear the variables
                     inputStart = null;
@@ -156,7 +156,7 @@ include_once "include/session.php";
                 }
 
                 // Assume that it is from the scanner if it was entered really fast
-                function isScannerInput() 
+                function isScannerInput()
                 {
                     return (((inputStop - inputStart) / $("#prod_barcode").val().length) < 15);
                 }
@@ -172,7 +172,7 @@ include_once "include/session.php";
                     // stop listening for a timer event
                     clearTimeout(timing);
                     // if the value is being entered manually and hasn't finished being entered
-                    if (!isUserFinishedEntering() || $("#prod_barcode").val().length < 3) 
+                    if (!isUserFinishedEntering() || $("#prod_barcode").val().length < 3)
                     {
                         // keep waiting for input
                         return;
@@ -192,7 +192,7 @@ include_once "include/session.php";
                     reportValues();
                 }
 
-                function reportValues() 
+                function reportValues()
                 {
                     // update the metrics
                     $("#startTime").text(inputStart == null ? "" : inputStart);
@@ -200,14 +200,14 @@ include_once "include/session.php";
                     $("#endTime").text(inputStop == null ? "" : inputStop);
                     $("#lastKey").text(lastKey == null ? "" : lastKey);
                     $("#totalTime").text(inputStart == null ? "" : (inputStop - inputStart) + " milliseconds");
-                    
-                    if (!inputStart) 
+
+                    if (!inputStart)
                     {
                         // clear the results
                         $("#resultsList").html("");
                         $("#prod_barcode").focus().select();
-                    } 
-                    else 
+                    }
+                    else
                     {
                         // prepend another result item
                         var inputMethod = isScannerInput() ? "Scanner" : "Keyboard";
@@ -273,7 +273,7 @@ include_once "include/session.php";
 <script>
 
      function send_request(){
-    
+
        //  alert( "Hello" );
 //            var name = $('#waiter_name').val();
 //                $.ajax( { type : 'POST',
@@ -286,96 +286,98 @@ include_once "include/session.php";
 //             //alert( "error" );
 //           }
 //         });
-    
+
      }
-    
+
      function openAjaxModel()
      {
            $('#addcategorymodel').modal('show');
            $('#addcategorymodel').find('#submit_btn').click(function()
            {
                 var catname = $('#cat_name').val();
-    
+
                 $.ajax({ type : 'POST',
                          data : { cat_name:catname},
                          url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
-                         success: function ( data ) 
+                         success: function ( data )
                          {
                               $('#addcategorymodel').modal('hide');
                               alert(data);
                               window.location.href = '';
                               // <=== VALUE RETURNED FROM FUNCTION.
                          },
-                         error: function ( xhr ) 
+                         error: function ( xhr )
                          {
                             //alert( "error" );
                          }
-                    });   
+                    });
          });
     }
-    
+
     function sendrequest()
     {
         var prod_name =  $('#prod_name').val();
         var prod_price =  $('#prod_price').val();
-        var prod_code =  $('#prod_code').val();
+        var prod_code =  0;//$('#prod_code').val();
         var prod_discount =  $('#prod_discount').val();
-        var prod_barcode =  $('#prod_barcode').val();
-        
+        var prod_barcode =  0;//$('#prod_barcode').val();
+
+        alert(prod_name);
+        alert(prod_price);
+        alert(prod_discount);
+
         var e = document.getElementById("categories");
         var cat_id = e.options[e.selectedIndex].value;
-        
+
            $.ajax({  type : 'POST',
-                     data : { prodname:prod_name, prodprice:prod_price, prodcode:prod_code, proddiscount:prod_discount, catid:cat_id, prodbarcode:prod_barcode },
+                     data : { prodname:prod_name, prodprice:prod_price, proddiscount:prod_discount, catid:cat_id, prodbarcode:prod_barcode },
                      url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
-                     success: function ( data ) 
+                     success: function ( data )
                      {
                         alert(data);
                         //window.location.href = '';
-              
+
                         // <=== VALUE RETURNED FROM FUNCTION.
                      },
-                     error: function ( xhr ) 
+                     error: function ( xhr )
                      {
                         //alert( "error" );
                      }
                   });
     }
-    
-    function showAjaxModal(id){
-       
 
-//            
+    function showAjaxModal(id){
+
+
+//
 //                var getValue = document.getElementById('1').value;
 //                console.log(getValue);
 //                alert(getValue);
-                
+
                 //alert(id);
-            
+
                 var name = $('#td_0213_'+id).html();
                 var price = $('#td_0211_'+id).html();
-                var code = $('#td_0214_'+id).html();
+                var code = 0;//$('#td_0214_'+id).html();
                 var discount = $('#td_0210_'+id).html();
-                var barcode = $('#td_0212_'+id).html();
+                var barcode = 0;//$('#td_0212_'+id).html();
                    //alert(name);
                 $('#exampleModalLong').modal('show');
                 $('#exampleModalLong').find('#prod_name').val(name);
                 $('#exampleModalLong').find('#prod_price').val(price);
-                $('#exampleModalLong').find('#prod_code').val(code);
                 $('#exampleModalLong').find('#prod_discount').val(discount);
-                $('#exampleModalLong').find('#prod_barcode').val(barcode);
-               
-                 
-                
+
+
+
                 $('#exampleModalLong').find('#sumit_btn').click(function(){
-                    
-                    
+
+
                    name = $('#exampleModalLong').find('#prod_name').val();
                    price =  $('#exampleModalLong').find('#prod_price').val();
-                   code =  $('#exampleModalLong').find('#prod_code').val();
+                   code =  0;//$('#exampleModalLong').find('#prod_code').val();
                    discount =  $('#exampleModalLong').find('#prod_discount').val();
-                   barcode =  $('#exampleModalLong').find('#prod_barcode').val();
-        
+                   barcode =  0;//$('#exampleModalLong').find('#prod_barcode').val();
+
 //                   alert(name);
 //                   alert(price);
 //                   alert(id);
@@ -384,32 +386,32 @@ include_once "include/session.php";
           data : { prod_name:name, prod_price:price, prod_code:code, proddiscount: discount, p_id:id, prodbarcode:barcode },
           url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
           success: function ( data ) {
-          
+
             alert(data);
          //   window.location.href = '';
-              
-              
+
+
               // <=== VALUE RETURNED FROM FUNCTION.
           },
           error: function ( xhr ) {
             //alert( "error" );
           }
         });
-                  
-                    
-                    
+
+
+
                 });
 
-                    
-                    
-           
-//           
-//                
+
+
+
+//
+//
                 // $('#exampleModalLong').html("aaaaaaaaaaaaaaa");
-                
-                
+
+
             }
-                
+
             function showConfirmModal(id)
             {
                  $('#confirmmodal').modal('show');
@@ -418,46 +420,46 @@ include_once "include/session.php";
                        $.ajax({ type : 'POST',
                                 data : { productidfordelete:id},
                                 url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
-                                success: function ( data ) 
+                                success: function ( data )
                                 {
                                    window.location.href = '';
                                    // <=== VALUE RETURNED FROM FUNCTION.
                                 },
-                                error: function ( xhr ) 
+                                error: function ( xhr )
                                 {
                                    //alert( "error" );
                                 }
-                              }); 
+                              });
                 });
             }
-    
+
         </script>
 
         <style type="text/css">
-        
-        
-            .resultItem 
+
+
+            .resultItem
             {
                 padding 8px;::;
             }
 
-            .Scanner 
+            .Scanner
             {
                 background-color: lightgreen;
             }
-            
-            .Keyboard 
+
+            .Keyboard
             {
                 background-color: lightgreen;
             }
-            
-            #resultsList div:first-of-type 
+
+            #resultsList div:first-of-type
             {
                 border: 1px solid black;
                 padding: 10px;
             }
-            
-            #myInput 
+
+            #myInput
             {
                 background-image: url('icons/searchicon.png'); /* Add a search icon to input */
                 background-position: 10px 12px; /* Position the search icon */
@@ -468,13 +470,13 @@ include_once "include/session.php";
                 border: 1px solid #ddd; /* Add a grey border */
                 margin-bottom: 12px; /* Add some space below the input */
             }
-        
-        
-        
+
+
+
         </style>
-        
+
         <script type="text/javascript">
-            function myFunction() 
+            function myFunction()
             {
               // Declare variables
               var input, filter, table, tr, td, i;
@@ -496,7 +498,7 @@ include_once "include/session.php";
               }
             }
         </script>
-        
+
     </head>
 
 <body>
@@ -527,13 +529,13 @@ include_once "include/session.php";
 
                   while($r = mysqli_fetch_assoc($qur))
                   {
-                      
+
                 ?>
                     <option value="<?php echo $r['category_id'] ?>"><?php echo $r['cat_name']  ?></option>
                 <?php
-                    
+
                   }
-                
+
                 ?>
   </select>
 </div>
@@ -541,25 +543,21 @@ include_once "include/session.php";
             <button type="button" class="btn btn-success" onclick="openAjaxModel();" data-target="#addcategorymodel">
               Add Category <i class="glyphicon glyphicon-plus"></i>
             </button>
-            
+
             <br/>
             <br/>
-            
+
             <label>Product Details</label>
-            
+
             <br>
             <input type="text" id="prod_name" class="form-control" placeholder="Product Name..." required>
             <br>
             <input type="text" id="prod_price" class="form-control" placeholder="Product Price..." required>
             <br>
-            <input type="text" id="prod_code" class="form-control" placeholder="Product Code..." required>
-            <br>
             <input type="text" class="form-control" id="prod_discount" placeholder="Product Discount...">
-            <br> 
-            <input maxlength="13" type="text" id="prod_barcode" class="form-control" placeholder="Product Barcode..." required>
             <br>
             <div>
-             
+
             <div id="resultsList"></div>
             </div>
 
@@ -570,40 +568,40 @@ include_once "include/session.php";
             </div>
                     <h2>Products' List</h2>
                     <div>
-                        
+
                         <div class="form-group">
-                            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for items..">   
+                            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for items..">
                         </div>
-                        
+
                         <table class="table table-bordered table-hover" id="myTable">
                             <thead>
                                 <tr>
                                     <th>NAME</th>
                                     <th>PRICE</th>
-                                    <th>PRODUCT CODE</th>
+
                                     <th>DISCOUNT %</th>
-                                    <th>BARCODE VALUE</th>
+
                                     <th>STATUS</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                
+
                             <?php
-                                
+
                                 $getData = "SELECT * FROM menu_products";
                                 $qur = $conn->query($getData);
-                                
+
                                 while($r = mysqli_fetch_assoc($qur))
                                 {
 //$msg[] = array("user_id" => $r['id'] , "fullname" =>$r['firstname'].' '.$r['lastname'] , "displayname" =>$r['displayname'], "image" =>$link.$r['image']);
                                 ?>
-                                
+
                                   <tr>
                                     <td id="<?php echo 'td_0213_'.$r['p_id'] ?>"><?php echo $r['p_name'] ?></td>
                                     <td id="<?php echo 'td_0211_'.$r['p_id'] ?>"><?php echo $r['p_price'] ?></td>
-                                    <td id="<?php echo 'td_0214_'.$r['p_id'] ?>"><?php echo $r['p_code'] ?></td>
+
                                     <td id="<?php echo 'td_0210_'.$r['p_id'] ?>"><?php echo $r['discount_percent'] ?></td>
-                                    <td id="<?php echo 'td_0212_'.$r['p_id'] ?>"><?php echo $r['p_barcode'] ?></td>
+
                                     <td>
                                         <div class="btn-group">
                                             <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" type="button">Action <span class="caret"></span></button>
@@ -620,44 +618,44 @@ include_once "include/session.php";
                                         </div>
                                     </td>
                                 </tr>
-                                
+
                                 <?php
-                                    
+
                                 }
-                                
+
                                 ?>
-                                
+
                             </tbody>
                         </table>
                 </div>
         </div>
     </div>
 </div>
-    
+
 <div class="modal fade" id="addcategorymodel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-        
+
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-        
+
       <div class="modal-body">
        <label>Category Name</label>
         <input type="text" class="form-control" id="cat_name" placeholder="Category Name...">
       </div>
-      
+
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
         <button type="button" id="submit_btn" onclick="send_request();" class="btn btn-secondary">Add</button>
       </div>
-          
+
     </div>
   </div>
 </div>
-    
+
 <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -670,18 +668,12 @@ include_once "include/session.php";
       <div class="modal-body">
         <label>Product Name</label>
         <input type="text" class="form-control" id="prod_name" placeholder="Product Name...">
-        <br>  
+        <br>
         <label>Product Price</label>
         <input type="text" class="form-control" id="prod_price" placeholder="Product Price...">
-        <br> 
-        <label>Product Code</label>
-        <input type="text" class="form-control" id="prod_code" placeholder="Product Code...">
-        <br> 
+        <br>
         <label>Product Discount</label>
         <input type="text" class="form-control" id="prod_discount" placeholder="Product Discount...">
-        <br> 
-        <label>Product Barcode</label>
-        <input type="text" class="form-control" id="prod_barcode" placeholder="Product Barcode...">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -690,26 +682,26 @@ include_once "include/session.php";
     </div>
   </div>
 </div>
-    
+
 <div class="modal fade" id="confirmmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-        
+
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-        
+
       <div class="modal-body">
-        <label>Are you sure you want to delete this inventory?</label> 
+        <label>Are you sure you want to delete this inventory?</label>
       </div>
-        
+
       <div class="modal-footer">
         <button type="button" id="delete_btn_yes" class="btn btn-secondary">YES</button>
         <button type="button" id="sumit_btn" data-dismiss="modal" class="btn btn-primary">NO</button>
       </div>
-        
+
     </div>
   </div>
 </div>
