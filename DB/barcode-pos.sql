@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2018 at 12:04 PM
+-- Generation Time: May 07, 2018 at 12:08 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -156,7 +156,7 @@ CREATE TABLE `pos_config` (
 --
 
 INSERT INTO `pos_config` (`id`, `company_name`, `company_image`, `company_pdf_image`, `is_deleted`, `last_updated`) VALUES
-(1, 'Catchy Attire', 'icons/pos_logo.png', 'reports/logo.png', '0', '2017-05-22 12:18:52');
+(1, 'Pizza Yumm\'s', 'icons/pos_logo.png', 'reports/logo.png', '0', '2017-05-22 12:18:52');
 
 -- --------------------------------------------------------
 
@@ -177,7 +177,7 @@ CREATE TABLE `pos_printer` (
 --
 
 INSERT INTO `pos_printer` (`id`, `printer_name`, `printer_ip`, `printer_port`, `last_updated`) VALUES
-(1, 'POS80', '172.16.1.244', '9100', '2017-05-25 14:11:09');
+(1, 'POS9', '172.16.1.244', '9100', '2017-05-25 14:11:09');
 
 -- --------------------------------------------------------
 
