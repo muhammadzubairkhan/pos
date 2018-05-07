@@ -1,0 +1,47 @@
+FOR THERMAL PRINTER USB
+
+Folder: escpos-php-master/example/interface/receiptforcustomer.php
+
+Folder: escpos-php-master/example/interface/xreport_damage.php
+
+Folder: escpos-php-master/example/interface/xreport_sales.php
+
+Folder: escpos-php-master/example/interface/zreport_damage.php
+
+Folder: escpos-php-master/example/interface/zreport_sales.php
+
+MODIFY THE NAME OF PRINTER HERE:
+
+$connector = new WindowsPrintConnector("POS80");
+
+=====================================================
+
+
+FOR THERMAL PRINTER NETWORK IP
+
+Folder: escpos-php-master/example/interface/receiptforkitchen.php
+
+MODIFY THE IP AND PORT HERE:
+
+$connector = new NetworkPrintConnector("172.16.1.252", 9100);
+
+=====================================================
+
+DATABASE PROCESS:
+
+File to change: (if port is changed)
+Folder: include/dbconnect.php
+
+$server = "localhost";
+$username = "root";
+$pass = "";
+$db = "pos";
+
+=====================================================
+
+DATABASE FILE:
+
+File Location: 
+
+DB/pos.sql
+

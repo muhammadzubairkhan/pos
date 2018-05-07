@@ -1,0 +1,22 @@
+.featured-box
+{
+    
+-webkit-box-shadow: -3px 0px 32px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: -3px 0px 32px 0px rgba(0,0,0,0.75);
+box-shadow: -3px 0px 32px 0px rgba(0,0,0,0.75);
+
+}
+
+.panel-default{
+    cursor:pointer;
+    font-family: 'Raleway',sans-serif;
+}
+.panel-default > .panel-footer {
+    color: #fff;
+    background-color: #47c8ed;    
+    display:none;
+    text-shadow: 1px 1px 1px rgba(150, 150, 150, 1);
+}
+.panel-default i{
+    font-size: 5em;
+    }
