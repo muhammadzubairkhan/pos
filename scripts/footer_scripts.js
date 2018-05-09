@@ -10,15 +10,15 @@ try
     // Get the modal
     var span = document.getElementsByClassName("close")[0];
     var modal = document.getElementById('myModal');
-    
-    btn.onclick = function() 
+
+    btn.onclick = function()
     {
         modal.style.display = "block";
         var p_name = $("#orders li div #p_name");
         var quanbox = $('#orders li div #val');
         var pricebox = $('#orders li #pricebox h4');
         var discount = $('#orders li #discounted_amount h4');
-        
+
         $("#table_products").html("");
 
         for(var i = 0;i<p_name.length;i++)
@@ -28,14 +28,18 @@ try
         }
 
         var total = $('#totaltxt').text();
-        var discount = $('#discounttxt').text();
-        
-        $('#modal-total').html(total);  
-        $('#modal-discounttxt').html(discount);
+        //alert(total);
+        //alert(discount);
+        var discount = parseInt(total) - parseInt(discount);
+        //alert($('#discounttxt').text());
+        //var discount = parseInt(total) - parseInt($('#discounttxt').text());
+
+        $('#modal-total').html(total);
+        $('#modal-discounttxt').html($('#discounttxt').text());
     }
-    
+
     // When the user clicks on <span> (x), close the modal
-    span.onclick = function() 
+    span.onclick = function()
     {
         try
         {
@@ -49,11 +53,11 @@ try
     }
 
     // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) 
+    window.onclick = function(event)
     {
         try
         {
-            if (event.target == modal) 
+            if (event.target == modal)
             {
                 modal.style.display = "none";
             }
@@ -64,7 +68,7 @@ try
             console.log("Error Trace: "+ err.stack);
         }
     }
-    
+
     var keys = document.querySelectorAll('#calculator span');
     var operators = ['+', '-', 'x', '÷'];
     var decimalAdded = false;
@@ -72,13 +76,13 @@ try
     var discountpercent = 0;
     var customer_name = "";
     var customer_contact = "";
-    
+
     // Add onclick event to all the keys and perform operations
-    for(var i = 0; i < keys.length; i++) 
+    for(var i = 0; i < keys.length; i++)
     {
         try
         {
-            keys[i].onclick = function(e) 
+            keys[i].onclick = function(e)
             {
                 // Get the input and button values
                 var input = document.querySelector('.screen');
@@ -88,7 +92,7 @@ try
                 // Now, just append the key values (btnValue) to the input string and finally use javascript's eval function to get the result
                 // If clear key is pressed, erase everything
 
-                if(btnVal == 'C') 
+                if(btnVal == 'C')
                 {
                    input.innerHTML = '';
                    decimalAdded = false;
@@ -96,18 +100,18 @@ try
 
                 // If eval key is pressed, calculate and display the result
 
-                else if(btnVal == 'Done') 
-                {   
+                else if(btnVal == 'Done')
+                {
                     discountedprice = $("#modal-discounttxt").text();
                     customer_name = $("#customer_name").val();
                     customer_contact = $("#customer_contact").val();
-                    
+
                     var customer_name_field = document.getElementById("customer_name");
                     var customer_contact_field = document.getElementById("customer_contact");
-                    
+
                     //alert(customer_name);
                     //alert(customer_contact);
-                    
+
                     discountpercent = parseInt(discountedprice);
                     //alert(discountpercent);
                     var total = parseInt($('#totaltxt').text());
@@ -119,7 +123,7 @@ try
                         var customer_div = $("#customer_info");
                         //alert(customer_div.hasClass("disabledbutton"));
                         var hasClassDisabled = customer_div.hasClass("disabledbutton");
-                        
+
                         //alert("flag0");
                         //alert(inputvalue);
                         if(inputvalue >= total_discounted)
@@ -134,7 +138,7 @@ try
                             }
 
                             //alert("Customer-ID: "+cust_id);
-                            
+
                             //alert(total);
                             //alert(discountpercent);
                             //alert(discountedprice);
@@ -167,14 +171,14 @@ try
                             {
                                 getbill();
                             }
-                            
+
                             //alert(total);
                             //alert(inputvalue);
                             //alert(discountpercent);
                             //alert(discountedprice);
-                            
+
                             Settle(cust_id, inputvalue,Math.round(total), Math.round(discountpercent));
-                            insertDiscount(discountpercent, total); 
+                            insertDiscount(discountpercent, total);
                             discountedprice = 0;
                             discountpercent = 0;
                         }
@@ -183,7 +187,7 @@ try
                     }
 
                 }
-                else if(btnVal == 'Discount') 
+                else if(btnVal == 'Discount')
                 {
                     var total = parseInt($('#totaltxt').text());
                     var inputvalue = parseFloat(input.innerHTML)/100;
@@ -204,7 +208,7 @@ try
                 // We'll fix these issues using some simple checks
                 // indexOf works only in IE9+
 
-                else if(operators.indexOf(btnVal) > -1) 
+                else if(operators.indexOf(btnVal) > -1)
                 {
                       // Operator is clicked
                       // Get the last character from the equation
@@ -219,7 +223,7 @@ try
                         input.innerHTML += btnVal;
 
                       // Replace the last operator (if exists) with the newly pressed operator
-                      if(operators.indexOf(lastChar) > -1 && inputVal.length > 1) 
+                      if(operators.indexOf(lastChar) > -1 && inputVal.length > 1)
                       {
                         // Here, '.' matches any character while $ denotes the end of string, so anything (will be an operator in this case) at the end of string will get replaced by new operator
                         input.innerHTML = inputVal.replace(/.$/, btnVal);
@@ -229,9 +233,9 @@ try
                 }
 
                 // Now only the decimal problem is left. We can solve it easily using a flag 'decimalAdded' which we'll set once the decimal is added and prevent more decimals to be added once it's set. It will be reset when an operator, eval or clear key is pressed.
-                else if(btnVal == '.') 
+                else if(btnVal == '.')
                 {
-                  if(!decimalAdded) 
+                  if(!decimalAdded)
                   {
                     input.innerHTML += btnVal;
                     decimalAdded = true;
@@ -239,7 +243,7 @@ try
                 }
 
                 // if any other key is pressed, just append it
-                else 
+                else
                 {
                   input.innerHTML += btnVal;
                 }
@@ -255,7 +259,7 @@ try
             console.log("Error Trace: "+ err.stack);
         }
     }
-    
+
 }
 catch(err)
 {
@@ -265,7 +269,7 @@ catch(err)
 
 //CALCULATOR
 
-;(function(window) 
+;(function(window)
 {
     try
     {
@@ -275,17 +279,17 @@ catch(err)
         var $$ = document.querySelectorAll.bind(document);
 
         // Find exact position of element
-        function isWindow(obj) 
+        function isWindow(obj)
         {
             return obj !== null && obj === obj.window;
         }
 
-        function getWindow(elem) 
+        function getWindow(elem)
         {
             return isWindow(elem) ? elem : elem.nodeType === 9 && elem.defaultView;
         }
 
-        function offset(elem) 
+        function offset(elem)
         {
             var docElem, win,
                 box = {top: 0, left: 0},
@@ -303,15 +307,15 @@ catch(err)
             };
         }
 
-        function convertStyle(obj) 
+        function convertStyle(obj)
         {
             try
             {
                 var style = '';
 
-                for (var a in obj) 
+                for (var a in obj)
                 {
-                    if (obj.hasOwnProperty(a)) 
+                    if (obj.hasOwnProperty(a))
                     {
                         style += (a + ':' + obj[a] + ';');
                     }
@@ -331,12 +335,12 @@ catch(err)
             // Effect delay
             duration: 750,
 
-            show: function(e, element) 
+            show: function(e, element)
             {
                 try
                 {
                     // Disable right click
-                    if (e.button === 2) 
+                    if (e.button === 2)
                     {
                         return false;
                     }
@@ -403,7 +407,7 @@ catch(err)
                 }
             },
 
-            hide: function(e) 
+            hide: function(e)
             {
                 TouchHandler.touchup(e);
 
@@ -413,11 +417,11 @@ catch(err)
                 // Get first ripple
                 var ripple = null;
                 var ripples = el.getElementsByClassName('waves-ripple');
-                if (ripples.length > 0) 
+                if (ripples.length > 0)
                 {
                     ripple = ripples[ripples.length - 1];
-                } 
-                else 
+                }
+                else
                 {
                     return false;
                 }
@@ -430,13 +434,13 @@ catch(err)
                 var diff = Date.now() - Number(ripple.getAttribute('data-hold'));
                 var delay = 350 - diff;
 
-                if (delay < 0) 
+                if (delay < 0)
                 {
                     delay = 0;
                 }
 
                 // Fade out ripple after delay
-                setTimeout(function() 
+                setTimeout(function()
                 {
                     try
                     {
@@ -459,13 +463,13 @@ catch(err)
 
                         ripple.setAttribute('style', convertStyle(style));
 
-                        setTimeout(function() 
+                        setTimeout(function()
                         {
-                            try 
+                            try
                             {
                                 el.removeChild(ripple);
-                            } 
-                            catch(err) 
+                            }
+                            catch(err)
                             {
                                 document.getElementById("error_message").innerHTML = err.message;
                             }
@@ -480,20 +484,20 @@ catch(err)
             },
 
             // Little hack to make <input> can perform waves effect
-            wrapInput: function(elements) 
+            wrapInput: function(elements)
             {
                 try
                 {
-                    for (var a = 0; a < elements.length; a++) 
+                    for (var a = 0; a < elements.length; a++)
                     {
                         var el = elements[a];
 
-                        if (el.tagName.toLowerCase() === 'input') 
+                        if (el.tagName.toLowerCase() === 'input')
                         {
                             var parent = el.parentNode;
 
                             // If input already have parent just pass through
-                            if (parent.tagName.toLowerCase() === 'i' && parent.className.indexOf('waves-effect') !== -1) 
+                            if (parent.tagName.toLowerCase() === 'i' && parent.className.indexOf('waves-effect') !== -1)
                             {
                                 continue;
                             }
@@ -504,7 +508,7 @@ catch(err)
 
                             var elementStyle = el.getAttribute('style');
 
-                            if (!elementStyle) 
+                            if (!elementStyle)
                             {
                                 elementStyle = '';
                             }
@@ -537,27 +541,27 @@ catch(err)
              * within the 500ms. Cannot mouseup between touchstart and
              * touchend, nor in the 500ms after touchend. */
             touches: 0,
-            allowEvent: function(e) 
+            allowEvent: function(e)
             {
                 try
                 {
                     var allow = true;
 
-                    if (e.type === 'touchstart') 
+                    if (e.type === 'touchstart')
                     {
                         TouchHandler.touches += 1; //push
-                    } 
-                    else if (e.type === 'touchend' || e.type === 'touchcancel') 
+                    }
+                    else if (e.type === 'touchend' || e.type === 'touchcancel')
                     {
-                        setTimeout(function() 
+                        setTimeout(function()
                         {
-                            if (TouchHandler.touches > 0) 
+                            if (TouchHandler.touches > 0)
                             {
                                 TouchHandler.touches -= 1; //pop after 500ms
                             }
                         }, 500);
-                    } 
-                    else if (e.type === 'mousedown' && TouchHandler.touches > 0) 
+                    }
+                    else if (e.type === 'mousedown' && TouchHandler.touches > 0)
                     {
                         allow = false;
                     }
@@ -569,7 +573,7 @@ catch(err)
                     document.getElementById("error_message").innerHTML = err.message;
                 }
             },
-            touchup: function(e) 
+            touchup: function(e)
             {
                 TouchHandler.allowEvent(e);
             }
@@ -581,11 +585,11 @@ catch(err)
             returns null when .waves-effect element not in "click tree"
         */
 
-        function getWavesEffectElement(e) 
+        function getWavesEffectElement(e)
         {
             try
             {
-                if (TouchHandler.allowEvent(e) === false) 
+                if (TouchHandler.allowEvent(e) === false)
                 {
                     return null;
                 }
@@ -593,14 +597,14 @@ catch(err)
                 var element = null;
                 var target = e.target || e.srcElement;
 
-                while (target.parentElement !== null) 
+                while (target.parentElement !== null)
                 {
-                    if (!(target instanceof SVGElement) && target.className.indexOf('waves-effect') !== -1) 
+                    if (!(target instanceof SVGElement) && target.className.indexOf('waves-effect') !== -1)
                     {
                         element = target;
                         break;
-                    } 
-                    else if (target.classList.contains('waves-effect')) 
+                    }
+                    else if (target.classList.contains('waves-effect'))
                     {
                         element = target;
                         break;
@@ -620,17 +624,17 @@ catch(err)
             Bubble the click and show effect if .waves-effect elem was found
         */
 
-        function showEffect(e) 
+        function showEffect(e)
         {
             try
             {
                 var element = getWavesEffectElement(e);
 
-                if (element !== null) 
+                if (element !== null)
                 {
                     Effect.show(e, element);
 
-                    if ('ontouchstart' in window) 
+                    if ('ontouchstart' in window)
                     {
                         element.addEventListener('touchend', Effect.hide, false);
                         element.addEventListener('touchcancel', Effect.hide, false);
@@ -647,11 +651,11 @@ catch(err)
             }
         }
 
-        Waves.displayEffect = function(options) 
+        Waves.displayEffect = function(options)
         {
             options = options || {};
 
-            if ('duration' in options) 
+            if ('duration' in options)
             {
                 Effect.duration = options.duration;
             }
@@ -659,7 +663,7 @@ catch(err)
             //Wrap input inside <i> tag
             Effect.wrapInput($$('.waves-effect'));
 
-            if ('ontouchstart' in window) 
+            if ('ontouchstart' in window)
             {
                 document.body.addEventListener('touchstart', showEffect, false);
             }
@@ -674,18 +678,18 @@ catch(err)
            where the user doesn't want a delegated click handler.
         */
 
-        Waves.attach = function(element) 
+        Waves.attach = function(element)
         {
             //FUTURE: automatically add waves classes and allow users
             // to specify them with an options param? Eg. light/classic/button
 
-            if (element.tagName.toLowerCase() === 'input') 
+            if (element.tagName.toLowerCase() === 'input')
             {
                 Effect.wrapInput([element]);
                 element = element.parentElement;
             }
 
-            if ('ontouchstart' in window) 
+            if ('ontouchstart' in window)
             {
                 element.addEventListener('touchstart', showEffect, false);
             }
@@ -695,7 +699,7 @@ catch(err)
 
         window.Waves = Waves;
 
-        document.addEventListener('DOMContentLoaded', function() 
+        document.addEventListener('DOMContentLoaded', function()
         {
             Waves.displayEffect();
         }, false);
@@ -706,5 +710,5 @@ catch(err)
     document.getElementById("error_message").innerHTML = "Error Message: " + err.message + "<br/>Error Name: " + err.name + "<br/>Error Line: " + err.lineNumber + "<br/>Error File: " + err.fileName + "<br/>For stack trace, view console!";
     console.log("Error Trace: "+ err.stack);
 }
-    
+
 })(window);

@@ -1,6 +1,6 @@
 //Global Variables
 var orderData = [];
-var waiterDetails = []; 
+var waiterDetails = [];
 var cust_id = "";
 var waiterid = 0;
 var serviceNum = 0;
@@ -24,7 +24,7 @@ $(document).ready(function()
         });
 
         $("#main").addClass("disabledbutton");
-        
+
         checkWorkPeriods();
     }
     catch(err)
@@ -35,12 +35,12 @@ $(document).ready(function()
 
 });
 
-$(document).ready(function() 
+$(document).ready(function()
 {
     try
     {
-        var pressed = false; 
-        var chars = []; 
+        var pressed = false;
+        var chars = [];
         $(window).keypress(function(e) {
             if (e.which >= 48 && e.which <= 57) {
                 chars.push(String.fromCharCode(e.which));
@@ -66,7 +66,7 @@ $(document).ready(function()
         document.getElementById("error_message").innerHTML = "Error Message: " + err.message + "<br/>Error Name: " + err.name + "<br/>Error Line: " + err.lineNumber + "<br/>Error File: " + err.fileName + "<br/>For stack trace, view console!";
         console.log("Error Trace: "+ err.stack);
     }
-    
+
 });
 
 //Disable Everything Function
@@ -151,7 +151,7 @@ function startPeriod()
         $("#end_btn").removeClass('disabledbutton');
         $("#tender_btn").removeClass('disabledbutton');
         $("#submit_btn").addClass('disabledbutton');
-        
+
         document.getElementById('main').disabled = false;
 
         if(isResume == true)
@@ -161,17 +161,17 @@ function startPeriod()
             document.getElementById("end_btn").disabled = false;
 
             //alert(workperiod_id);
-            
+
             if(status == 0 || status == 1)
             {
                 //alert("Start Period Status: " + status);
                 $.ajax( { type : 'POST',
                          data : { workPeriodId_start: workperiod_id, status_start: status},
                          url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
-                         success : function ( data ) 
-                         {   
+                         success : function ( data )
+                         {
                             //alert(data);
-                            
+
                             if(data != 0)
                             {
                                 //alert("Data");
@@ -179,9 +179,9 @@ function startPeriod()
                                 $("#third_div").addClass('disabledbutton');
                                 $("#fourth_div").addClass('disabledbutton');
                                 $(".barcode-form").addClass('disabledbutton');
-                                document.getElementById('main').disabled = false;   
+                                document.getElementById('main').disabled = false;
                             }
-                            else 
+                            else
                             {
                                 //alert("No Data");
                                 $("#main").removeClass('disabledbutton');
@@ -195,7 +195,7 @@ function startPeriod()
                             cust_id = data[0].customer_id;
                             //alert("In Start Period Customer ID: "+cust_id);
                         },
-                        error: function ( xhr ) 
+                        error: function ( xhr )
                         {
                             //alert( "error" );
                         }
@@ -203,20 +203,20 @@ function startPeriod()
             }
             else
             {
-                
+
             }
 
         }
         else
         {
                //cust_id =  "<?php echo base_convert(time(), 10, 36); ?>";
-                
+
                cust_id = new Date().valueOf();
-            
+
                $.ajax( { type : 'POST',
                          data : { startwork:true },
                          url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
-                         success : function ( data ) 
+                         success : function ( data )
                          {
                             //alert(data);
                             var temp = JSON.parse(data);
@@ -227,7 +227,7 @@ function startPeriod()
 
                             //printKitchenReceipt(custid,tableid);
                         },
-                        error: function ( xhr ) 
+                        error: function ( xhr )
                         {
                             //alert( "error" );
                         }
@@ -244,7 +244,7 @@ function startPeriod()
 //Print Kitchen Receipt
 
 function printKitchenReceipt()
-{ 
+{
     try
     {
         //alert("kitchen receipt");
@@ -254,7 +254,7 @@ function printKitchenReceipt()
         var myDataArray1 = [];
         var myDataArray2 = [];
         var myDataArray3 = [];
-        var myDataArrayCatID = [];                
+        var myDataArrayCatID = [];
 
         for(var num = prevOrderDataLength; num < orderData.length; num++)
         {
@@ -267,7 +267,7 @@ function printKitchenReceipt()
 
         myDataArray2 = myDataArray1.sort(
 
-            function(a, b) 
+            function(a, b)
             {
                 return parseFloat(a.CAT_ID) - parseFloat(b.CAT_ID);
             }
@@ -276,7 +276,7 @@ function printKitchenReceipt()
 
         var flags = [], output = [], l = myDataArray2.length, i;
 
-        for( i = 0; i < l; i++) 
+        for( i = 0; i < l; i++)
         {
             //alert("FLAG VALUE FOR: "+flags[myDataArray2[i].CAT_ID]);
             if(flags[myDataArray2[i].CAT_ID])    continue;
@@ -287,7 +287,7 @@ function printKitchenReceipt()
             output.push(myDataArray2[i].CAT_ID);
             //console.log(myDataArray2[i].CAT_ID);
             //alert("iteration   "+i);
-            //alert("FLAG VALUE: "+output[i]);                        
+            //alert("FLAG VALUE: "+output[i]);
         }
 
         //console.log(myDataArray2+" Cat IDsss");
@@ -300,7 +300,7 @@ function printKitchenReceipt()
 
         for(var num1 = 0; num1 < myDataArray2.length; num1++)
         {
-            //alert(myDataArray2[num1]['P_NAME']);   
+            //alert(myDataArray2[num1]['P_NAME']);
             catID = myDataArray2[num1]['CAT_ID'];
             //temp_catID = myDataArray2[num1]['CAT_ID'];
             //temp_catID = myDataArray2[num1]['CAT_ID'];
@@ -313,7 +313,7 @@ function printKitchenReceipt()
                 //continue;
             }
             else
-            {    
+            {
                 var obj = {cat_idd:temp_catID, data:tempArray};
                 finalArray.push(obj);
                 temp_catID = catID;
@@ -350,11 +350,11 @@ function printKitchenReceipt()
         $.ajax({ type : 'POST',
                  data : { data:JSON.stringify(finalArray), custid:cust_id},
                  url  : 'escpos-php-master/example/interface/receiptforkitchen.php',              // <=== CALL THE PHP FUNCTION HERE.
-                 success: function(data) 
+                 success: function(data)
                  {
                        //alert(data);
                        //alert("OK   "+data);
-                       //window.location.href = '';  
+                       //window.location.href = '';
                        //alert("success receipt");
 
                         //alert(data);
@@ -364,7 +364,7 @@ function printKitchenReceipt()
 
                         // <=== VALUE RETURNED FROM FUNCTION.
                 },
-                error: function (xhr) 
+                error: function (xhr)
                 {
                     //alert( "error  "+xhr );
                 }
@@ -383,7 +383,7 @@ function printKitchenReceiptForEditOrder(index, newquan, edittype)
 {
     try
     {
-        var tempArray = []; 
+        var tempArray = [];
         var finalArray = [];
         //console.log(orderData+"Order Data");
         var obj = {P_NAME:orderData[index]['p_name'],P_QUANTITY:newquan};
@@ -394,24 +394,24 @@ function printKitchenReceiptForEditOrder(index, newquan, edittype)
 
         //alert("Final Array: "+finalArray);
         //alert("Cust ID: "+cust_id);
-        
+
         $.ajax({ type : 'POST',
                  data : { data:JSON.stringify(finalArray), custid:cust_id, edit_type:edittype},
                  url  : 'escpos-php-master/example/interface/receiptforkitchen.php',              // <=== CALL THE PHP FUNCTION HERE.
-                 success: function(data) 
+                 success: function(data)
                  {
                     //alert(data);
                     //alert("OK   "+data);
-                    //window.location.href = '';  
+                    //window.location.href = '';
                     //alert("success receipt");
 
                     //console.log("Order Data length "+orderData.length);
                     prevOrderDataLength = orderData.length;
-                    startOrder(1); 
+                    startOrder(1);
 
                     // <=== VALUE RETURNED FROM FUNCTION.
                  },
-                 error: function (xhr) 
+                 error: function (xhr)
                  {
                     //alert( "error  "+xhr );
                  }
@@ -431,15 +431,15 @@ function printCustomerReceipt()
     try
     {
         //alert(orderData);
-        
+
         $.ajax({ type : 'POST',
                  data : { data:JSON.stringify(orderData), custid:cust_id },
                  url  : 'escpos-php-master/example/interface/receiptforcustomer.php',              // <=== CALL THE PHP FUNCTION HERE.
-                 success: function(data) 
+                 success: function(data)
                  {
                     // <=== VALUE RETURNED FROM FUNCTION.
                  },
-                 error: function (xhr) 
+                 error: function (xhr)
                  {
                     //alert( "error  "+xhr );
                  }
@@ -492,20 +492,20 @@ function endPeriod()
        $.ajax( { type : 'POST',
                  data : { 'endwork':true,'workperiod_id_end':workperiod_id },
                  url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
-                 success: function ( data ) 
+                 success: function ( data )
                  {
 
                     //alert(data);
 
                     if(data != "")
                     {
-                        //console.logg(data);  
+                        //console.logg(data);
                         data = JSON.parse(data);
                         nonTenderOrders(data);
                     }
                     else
                     {
-                          window.location.href = ''; 
+                          window.location.href = '';
                     }
 
                     $("#main").removeClass('disabledbutton');
@@ -513,7 +513,7 @@ function endPeriod()
                     $("#start_btn").removeClass('disabledbutton');
                     $("#tender_btn").removeClass('disabledbutton');
                  },
-                 error: function ( xhr ) 
+                 error: function ( xhr )
                  {
                     //alert( "error" );
                  }
@@ -535,13 +535,13 @@ function checkWorkPeriods()
        $.ajax( { type : 'POST',
                  data : { 'workperiod_status':0 },
                  url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
-                 success: function ( data ) 
+                 success: function ( data )
                  {
 
                     //alert(data);
 
                     if(data.length > 0)
-                    {                        
+                    {
                         //alert("WorkPeriod Hain");
                         $("#end_btn").addClass('disabledbutton');
                         $("#start_btn").removeClass('disabledbutton');
@@ -550,14 +550,14 @@ function checkWorkPeriods()
                     else
                     {
                           //alert("WorkPeriod Nahi Hain");
-                          window.location.href = ''; 
+                          window.location.href = '';
                           $("#end_btn").removeClass('disabledbutton');
                     }
 
                     $("#main").addClass('disabledbutton');
-                    
+
                  },
-                 error: function ( xhr ) 
+                 error: function ( xhr )
                  {
                     //alert( "error" );
                  }
@@ -587,8 +587,8 @@ function nonTenderOrders(data)
         {
             $("#nontender-waiters").append('<tr><td><center>'+data[i].p_name+'</center></td><td><center>'+data[i].quantity+'</center></td><td><center>'+data[i].quantity*data[i].p_price+' Rs</center></td><td><center>'+data[i].quantity*data[i].discount_percent+' Rs</center></td></tr>');
             //<button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="getServices('+data[i].waiter_id+','+data[i].status+');">VIEW</button>
-        } 
-        
+        }
+
         $("#nontender-waiters").append('<tr><td colspan="4"></td></tr><tr><td colspan="3">TOTAL DISCOUNT</td><td>'+discount+'</td></tr><tr><td colspan="3">TOTAL AMOUNT</td><td>'+total+'</td></tr><tr><td colspan="4"><center><button type="submit" id="tender_btn" onclick="tender();" class="btn btn-warning waves-effect waves-light btn-xlg black" style="color:white;">TENDER <span class="glyphicon glyphicon-ok"></span></button></center></td></tr>');
     }
     catch(err)
@@ -596,7 +596,7 @@ function nonTenderOrders(data)
         document.getElementById("error_message").innerHTML = "Error Message: " + err.message + "<br/>Error Name: " + err.name + "<br/>Error Line: " + err.lineNumber + "<br/>Error File: " + err.fileName + "<br/>For stack trace, view console!";
         console.log("Error Trace: "+ err.stack);
     }
-}    
+}
 
 //Start Order Using Status like 0 for Submitted Order, 1 for Billed Order, 2 for Tendered Order
 
@@ -608,7 +608,7 @@ function startOrder(status)
         //alert("PREVIOUS ORDER DATA LENGTH: "+prevOrderDataLength);
         //alert("Order Status:"+"  "+status);
         $("#orders").html("");
-        //$('#orders').append('<li class="list-group-item row"> <div class="col-md-12"><h4 id="ordersHeading" class="list-group-item-heading"><center>Items Ordered</center></h4></li>');    
+        //$('#orders').append('<li class="list-group-item row"> <div class="col-md-12"><h4 id="ordersHeading" class="list-group-item-heading"><center>Items Ordered</center></h4></li>');
         calculatetotal();
         orderData = [];
         ordertype = 0;
@@ -621,40 +621,41 @@ function startOrder(status)
         $("#third_div").removeClass('disabledbutton');
         $("#fourth_div").removeClass('disabledbutton');
 
-        if (status == 0) 
+        if (status == 0)
         {
            prevOrderDataLength = 0;
 
            $.ajax({ type : 'POST',
                     data : { 'workPeriodid':workperiod_id, 'status':status },
                     url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
-                    success : function ( data ) 
-                    {                            
+                    success : function ( data )
+                    {
                          //alert("Current Order: "+data);
                          data = JSON.parse(data);
-                        
+
                          var discounted_amount;
                          var discounted_price;
-                        
+
                          //var discounted_amount = (discounted_price/100)*price;
                          //discounted_price = price - discounted_amount;
-                        
+
                          cust_id = data[0].customer_id;
                          //alert("In Start Order Customer ID: "+cust_id);
 
                          //printKitchenReceipt(custid,tableid);
                          //$("#orders").html("");
 
-                         for (var i = 0; i < data.length ; i++) 
+                         for (var i = 0; i < data.length ; i++)
                          {
-                             discounted_amount = (data[i].discount_percent/100)*data[i].p_price;
+                             //discounted_amount = (data[i].discount_percent/100)*data[i].p_price;
+                             discounted_amount = data[i].discount_percent;
                              discounted_price = data[i].p_price - discounted_amount;
-                             
+
                              //alert(discounted_amount);
-                             
+
                              //alert("Current Order: "+data);
                              //appendOrders(data[i].p_name, data[i].product_id, data[i].p_price, data[i].discount_percent*data[i].quantity, data[i].quantity, status, data[i].cat_id);
-                             
+
                              appendOrders(data[i].p_name, data[i].product_id, data[i].p_price, data[i].discount_percent, data[i].quantity, status, data[i].cat_id);
                          }
 
@@ -662,10 +663,10 @@ function startOrder(status)
 
                          $(".increase_btn").addClass("disabledbutton");
                          $(".decrease_btn").addClass("disabledbutton");
-                        
-                        
-                        
-                         if (status == 2) 
+
+
+
+                         if (status == 2)
                          {
                              //alert("Hi");
                              billClickEnable();
@@ -676,7 +677,7 @@ function startOrder(status)
                              submitClickEnable();
                          }
                     },
-                    error: function ( xhr ) 
+                    error: function ( xhr )
                     {
                        //alert( "error" );
                     }
@@ -695,7 +696,7 @@ function startOrder(status)
            //alert(waiterid + "   " +serviceNum);
 
         }
-        else if (status == 1 || status == 2) 
+        else if (status == 1 || status == 2)
         {
            //alert("status 2 if "+status);
            //$("#sec_div").removeClass("disabledbutton");
@@ -704,13 +705,13 @@ function startOrder(status)
            //$('.services').addClass('hidden');
            //waiterid = waiter_id;
            //serviceNum = service_Num;
-            
-            
+
+
 
            $.ajax({ type : 'POST',
                     data : { 'workPeriodid':workperiod_id, 'status':status },
                     url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
-                    success : function ( data ) 
+                    success : function ( data )
                     {
                          //alert("Hi");
                          //alert(data);
@@ -718,35 +719,37 @@ function startOrder(status)
 
                         var discounted_amount;
                          var discounted_price;
-                        
-                        
+
+
                          //printKitchenReceipt(custid,tableid);
                          //$("#orders").html("");
 
                          if(status == 0 || status == 1)
                          {
-                             for (var i = 0; i < data.length ; i++) 
+                             for (var i = 0; i < data.length ; i++)
                              {
                                  //alert(data[i].discount_percent);
-                                 discounted_amount = (data[i].discount_percent/100)*data[i].p_price;
+                                 //discounted_amount = (data[i].discount_percent/100)*data[i].p_price;
+                                 discounted_amount = data[i].discount_percent;
                                  discounted_price = data[i].p_price - discounted_amount;
+                                 //alert(discounted_price);
 
                                  //alert(discounted_amount);
                                  //alert(discounted_price);
-                                 
-                                 
+
+
                                  //appendOrders(data[i].p_name, data[i].product_id, data[i].p_price, data[i].discount_percent*data[i].quantity, data[i].quantity, status, data[i].cat_id);
-                                 
-                                 
+
+
                                  appendOrders(data[i].p_name, data[i].product_id, data[i].p_price, data[i].discount_percent, data[i].quantity, status, data[i].cat_id);
                              }
 
-                             prevOrderDataLength = orderData.length;  
+                             prevOrderDataLength = orderData.length;
                          }
-                        
-                        
 
-                         if (status == 2) 
+
+
+                         if (status == 2)
                          {
                              billClickEnable();
                              //alert("bill");
@@ -756,14 +759,14 @@ function startOrder(status)
                              submitClickEnable();
                          }
                     },
-                    error: function ( xhr ) 
+                    error: function ( xhr )
                     {
                        //alert( "error" );
                     }
                 });
         }
 
-        //alert(waiterid + "   " +serviceNum); 
+        //alert(waiterid + "   " +serviceNum);
     }
     catch(err)
     {
@@ -780,7 +783,7 @@ function EditOrder(row)
 {
     try
     {
-         var list = row.parentNode.parentNode.parentNode;          
+         var list = row.parentNode.parentNode.parentNode;
          var roww = $(list).index();
          var increase_btn = $('#orders li div #increase_btn').get(roww);
          var cancel_btn = $('#orders li div .btn-danger').get(roww);
@@ -794,15 +797,15 @@ function EditOrder(row)
          if($(row).text() == "ADD MORE")
          {
              var currentquan = parseInt(quanbox.get(roww).value);
-             $(row).html("APPLY");  
-             $(increase_btn).removeClass('disabledbutton'); 
-             $(cancel_btn).addClass('disabledbutton'); 
-             var pricebox = $('#orders li #pricebox h4');         
+             $(row).html("APPLY");
+             $(increase_btn).removeClass('disabledbutton');
+             $(cancel_btn).addClass('disabledbutton');
+             var pricebox = $('#orders li #pricebox h4');
          }
          else
          {
              $(row).html("ADD MORE");
-             $(increase_btn).addClass('disabledbutton'); 
+             $(increase_btn).addClass('disabledbutton');
              $(cancel_btn).removeClass('disabledbutton');
              var quanbox = $('#orders li div #val');
              var pricebox = $('#orders li #pricebox h4');
@@ -821,13 +824,13 @@ function EditOrder(row)
                 $.ajax( { type : 'POST',
                           data : { workPeriodid:workperiod_id, update_qty:finalqty, product_id : orderData[roww].p_id, customer_id: cust_id },
                           url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
-                          success : function ( data123 ) 
+                          success : function ( data123 )
                           {
                                 //alert("hello shujaat4");
                                 alert("Data Returned: "+data123);
                                 printKitchenReceiptForEditOrder(roww,finalqty,1);
                           },
-                          error: function ( xhr ) 
+                          error: function ( xhr )
                           {
                                 //alert( "error" );
                           }
@@ -848,7 +851,7 @@ function cancelOrder(row)
 {
     try
     {
-         var list = row.parentNode.parentNode.parentNode;          
+         var list = row.parentNode.parentNode.parentNode;
          var roww = $(list).index();
          var increase_btn = $('#orders li div #decrease_btn').get(roww);
          var addmore_btn = $('#orders li div .btn-success').get(roww);
@@ -856,15 +859,15 @@ function cancelOrder(row)
          if($(row).text() == "CANCEL")
          {
               var currentquan = parseInt(quanbox.get(roww).value);
-              $(row).html("APPLY");  
-              $(increase_btn).removeClass('disabledbutton'); 
+              $(row).html("APPLY");
+              $(increase_btn).removeClass('disabledbutton');
               $(addmore_btn).addClass('disabledbutton');
-              var pricebox = $('#orders li #pricebox h4');         
+              var pricebox = $('#orders li #pricebox h4');
          }
          else
          {
               $(row).html("CANCEL");
-              $(increase_btn).addClass('disabledbutton'); 
+              $(increase_btn).addClass('disabledbutton');
               $(addmore_btn).removeClass('disabledbutton');
               var quanbox = $('#orders li div #val');
               var pricebox = $('#orders li #pricebox h4');
@@ -880,19 +883,19 @@ function cancelOrder(row)
                     $.ajax( { type : 'POST',
                               data : {  workPeriodid:workperiod_id , minus_qty:finalqty , product_id:orderData[roww].p_id, customer_id: cust_id },
                               url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
-                              success: function ( data ) 
+                              success: function ( data )
                               {
                                     //alert(data);
                                     printKitchenReceiptForEditOrder(roww,finalqty,0);
                               },
-                              error: function ( xhr ) 
+                              error: function ( xhr )
                               {
                                     //alert( "error" );
                               }
                         });
                }
          }
-         //alert(currentquan); 
+         //alert(currentquan);
     }
     catch(err)
     {
@@ -919,30 +922,30 @@ function submitorder()
             var currentquan =  parseInt(quanbox.get(i).value);
             var currentprice =  parseInt(pricebox.get(i).innerHTML);
             var currentdiscount =  parseInt(discount.get(i).innerHTML);
-            
+
             orderData[i]["p_quan"] = currentquan;
             orderData[i]["p_price"] = currentprice;
             orderData[i]["p_discount"] = currentdiscount;
             //alert(orderData[i]["p_quan"]);
-            //alert(orderData[i].p_quan);            
+            //alert(orderData[i].p_quan);
         }
 
         //alert("Order Data Length: "+orderData.length);
-        
+
         if(cust_id == "")
         {
             //alert("Customer ID: "+cust_id);
             cust_id = new Date().valueOf();
             //alert("New Customer Created!");
         }
-        
+
         //alert(JSON.stringify(orderData));
-        
+
         $.ajax( { type : 'POST',
                   data : { OrderDetails:JSON.stringify(orderData), customer_id:cust_id, workPeriodid:workperiod_id, order_type:ordertype },
                   url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
-                  success: function ( data ) 
-                  {  
+                  success: function ( data )
+                  {
                     //alert(data);
                     //alert(JSON.stringify(orderData));
                     //alert("Submitted Order Data Return Value: "+data);
@@ -950,17 +953,17 @@ function submitorder()
                     $("#damage_btn").removeClass("disabledbutton");
                     $("#bill_btn").removeClass("disabledbutton");
                     $("#tender_btn").removeClass("disabledbutton");
-                    //$("#orders").addClass("disabledbutton"); 
+                    //$("#orders").addClass("disabledbutton");
 
                     //startOrder(2);
 
                     //alert(data);
                     //printKitchenReceipt();
-                    
+
                     window.location.reload(true);
 
                   },
-                  error: function ( xhr ) 
+                  error: function ( xhr )
                   {
                     //alert( "error" );
                   }
@@ -981,11 +984,11 @@ function submitorder()
 
 //Check For Order That is already being added. If Product with id 1 is added to cart, it will not be added again
 
-function in_array(array, id) 
+function in_array(array, id)
 {
     try
     {
-        for(var i = 0; i < array.length; i++) 
+        for(var i = 0; i < array.length; i++)
         {
            //alert(array[i]['p_id']);
 
@@ -1006,7 +1009,7 @@ function in_array(array, id)
 //Delete Order Row Function
 
 function deleteRow(row)
-{    
+{
     try
     {
         //alert(row);
@@ -1019,14 +1022,14 @@ function deleteRow(row)
         //alert(orderData);
         $(row).closest('li').remove();
         calculatetotal();
-        if (orderData.length < 1) 
+        if (orderData.length < 1)
         {
             disableAll();
         }
-        else if (orderData.length == prevOrderDataLength ) 
-        { 
+        else if (orderData.length == prevOrderDataLength )
+        {
             submitClickEnable();
-        }   
+        }
     }
     catch(err)
     {
@@ -1046,12 +1049,12 @@ function getServices(waiter_id, numOfServices)
         $('.services').removeClass('hidden');
         $('.services').hide().fadeIn(100);
         $("#services").html("");
-        $("#services").append('<li class="list-group-item row"> <div class="col-md-12"><h4 id="ordersHeading" class="list-group-item-heading"><center>Services</center></h4></div></li>');  
+        $("#services").append('<li class="list-group-item row"> <div class="col-md-12"><h4 id="ordersHeading" class="list-group-item-heading"><center>Services</center></h4></div></li>');
 
         $.ajax( { type : 'POST',
                   data : {workperiodid:workperiod_id,checkservicestatus:true },
                   url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
-                  success : function ( data ) 
+                  success : function ( data )
                   {
                     //alert(data);
                     data = JSON.parse(data);
@@ -1073,13 +1076,13 @@ function getServices(waiter_id, numOfServices)
                                           desc = "Reserved";
                                     }
                                     else if(data[j].status == 1)
-                                    {          
+                                    {
                                           status = 2;
                                           styleClass = "waiting_service";
                                           desc = "Bill";
                                     }
                                     else if(data[j].status == 2)
-                                    {         
+                                    {
                                           status = 3;
                                           styleClass = "tender_service";
                                           desc = "Tender";
@@ -1088,7 +1091,7 @@ function getServices(waiter_id, numOfServices)
                                     {
                                           status = 0;
                                           styleClass = "free_service";
-                                          desc = "Free"; 
+                                          desc = "Free";
                                     }
 
                                     break;
@@ -1096,10 +1099,10 @@ function getServices(waiter_id, numOfServices)
                                     //alert("mathced");
                                 }
                                 else
-                                {          
+                                {
                                           status = 0;
                                           styleClass = "free_service";
-                                          desc = "Free";          
+                                          desc = "Free";
                                 }
                         }
 
@@ -1110,12 +1113,12 @@ function getServices(waiter_id, numOfServices)
                         else
                         {
                               $("#services").append('<li class="list-group-item row '+styleClass+'"><div class="col-md-12" onclick="startOrder('+status+');"><h4 class="list-group-item-heading"><a href="#">Service '+(i+1)+'</a></h4><small class="list-group-item-text">'+desc+'</small></div></li>');
-                        }             
+                        }
                     }
 
                     //printKitchenReceipt(custid,tableid);
                 },
-                error: function ( xhr ) 
+                error: function ( xhr )
                 {
                     //alert( "error" );
                 }
@@ -1136,17 +1139,18 @@ function appendOrders(tr, id, price, discounted_price, quantity, status, catid)
 {
     try
     {
-        //alert(discounted_price);
+        //falert(discounted_price);
         id = parseInt(id);
-        var styleclass = "";               
+        var styleclass = "";
         var result = in_array(orderData, id);
-        
+
         //Discount Percentage Amount
-        var discounted_amount = (discounted_price/100)*price;
-        discounted_price = price - discounted_amount;
+        //var discounted_amount = (discounted_price/100)*price;
+        //var discounted_amount = data[i].discount_percent;
+        discounted_price = price - discounted_price;
         //alert("asdasd"+discounted_amount);
         //alert(status);
-        
+
         if(result)
         {
             var obj = {p_id:id, p_name:tr, p_quan:quantity, p_price:price, p_discount:discounted_price, cat_id:catid};
@@ -1155,27 +1159,27 @@ function appendOrders(tr, id, price, discounted_price, quantity, status, catid)
             if(status == 1 || status == 2 || status == 0)
             {
                 $('#orders').append('<li class="list-group-item row ordered-items"><div class="col-md-2"><h4 id="p_name">'+tr+'</h4></div> <div id="pricebox" class="col-md-2"><h4>'+(price*quantity)+' Rs</h4></div> <div class="col-md-6"><div class="form-inline"><button type="submit" id="decrease_btn" class="btn btn-sm btn-default disabledbutton decrease_btn"><span class="glyphicon glyphicon-minus"></span></button><div class="form-group"><input type="text" id="val" value="'+quantity+'" disabled  class="form-control" style="width:50px;"></div><button type="submit" id="increase_btn" class="btn btn-sm btn-default disabledbutton increase_btn"><span class="glyphicon glyphicon-plus"></span></button></div></div><div class="col-md-2" id="discounted_amount"><h4>'+discounted_price*quantity+'  Rs</h4></div></li>');
-                
+
                 //$(".delete_btn").addClass("disabledbutton");
-                
+
                 //<button type="submit" onclick="EditOrder(this)" class="btn btn-sm btn-success waves-effect waves-light">ADD MORE</button><button type="submit" onclick="cancelOrder(this)" class="btn btn-sm btn-danger waves-effect waves-light">CANCEL</button></div></div></li>');
 
                 calculatetotal();
             }
             else
-            {    
+            {
                 productClickEnable();
                 $("#bill_btn").addClass("disabledbutton");
                 $("#tender_btn").addClass("disabledbutton");
                 $('#orders').append('<li class="list-group-item row '+styleclass+' ordered-items"><div class="col-md-2"><h4 id="p_name">'+tr+'</h4></div> <div id="pricebox" class="col-md-2"><h4>'+(price*quantity)+' Rs </h4></div> <div class="col-md-6"><div class="form-inline"><button type="submit" id="decrease_btn" class="btn btn-sm btn-default decrease_btn"><span class="glyphicon glyphicon-minus"></span></button><div class="form-group"><input type="text" id="val" value="'+quantity+'" disabled  class="form-control" style="width:50px;"></div><button type="submit" id="increase_btn" class="btn btn-sm btn-default increase_btn"><span class="glyphicon glyphicon-plus"></span></button><button type="submit" onclick="deleteRow(this)" class="btn btn-sm btn-danger waves-effect waves-light delete_btn">Delete</button></div></div><div class="col-md-2" id="discounted_amount"><h4>'+discounted_price*quantity+' Rs</h4></div></li>');
-                
+
                 //<button type="submit" onclick="deleteRow(this)" class="btn btn-sm btn-danger waves-effect waves-light delete_btn">Delete</button></div></div></li>');
 
                 calculatetotal();
-                
+
 //                if(status == 1 || status == 2)
 //                {
-//                    
+//
 //                }
             }
         }
@@ -1202,12 +1206,12 @@ function Settle(custid, inputvalue, total, discountpercent)
 //    alert("S Input Value: "+inputvalue);
 //    alert("S Total: "+total);
 //    alert("S Discount Percent: "+discountpercent);
-    
+
     try
     {
         if(ordertype == 1)
-        {                    
-            submitorder(); 
+        {
+            submitorder();
             //add_customer();
         }
 
@@ -1216,7 +1220,7 @@ function Settle(custid, inputvalue, total, discountpercent)
         printCustomerReceipt(custid, inputvalue, total, discountpercent);
         alert("Printing Kitchen Receipt");
         printKitchenReceiptNew(custid, inputvalue, total, discountpercent);
-        
+
         //window.location.href = "";
     }
     catch(err)
@@ -1239,16 +1243,16 @@ function printCustomerReceipt(cust_id, inputvalue, total, discountpercent)
 //        alert("CR Discount Percent: "+discountpercent);
 
         //alert(JSON.stringify(orderData, null, 4));
-        
+
         $.ajax( { type : 'POST',
                   data : { data:JSON.stringify(orderData), custid:cust_id, input_value:inputvalue, total_amount:total, discount_percent:discountpercent },
                   url  : 'escpos-php-master/example/interface/receiptforcustomer.php',              // <=== CALL THE PHP FUNCTION HERE.
-                  success: function ( data ) 
+                  success: function ( data )
                   {
                         document.getElementById("myModal").style.display = "None";
                         // <=== VALUE RETURNED FROM FUNCTION.
                   },
-                  error: function ( xhr ) 
+                  error: function ( xhr )
                   {
                         //alert( "error  "+xhr );
                   }
@@ -1275,16 +1279,16 @@ function printKitchenReceiptNew(cust_id, inputvalue, total, discountpercent)
 //        alert("CR Discount Percent: "+discountpercent);
 
         //alert(JSON.stringify(orderData, null, 4));
-        
+
         $.ajax( { type : 'POST',
                   data : { data:JSON.stringify(orderData), custid:cust_id, input_value:inputvalue, total_amount:total, discount_percent:discountpercent },
                   url  : 'escpos-php-master/example/interface/receiptkitchen.php',              // <=== CALL THE PHP FUNCTION HERE.
-                  success: function ( data ) 
+                  success: function ( data )
                   {
                         document.getElementById("myModal").style.display = "None";
                         // <=== VALUE RETURNED FROM FUNCTION.
                   },
-                  error: function ( xhr ) 
+                  error: function ( xhr )
                   {
                         //alert( "error  "+xhr );
                   }
@@ -1301,10 +1305,10 @@ function printKitchenReceiptNew(cust_id, inputvalue, total, discountpercent)
 //Document Ready Function, Decrease and Increase The Quantity of Order Function
 
 $(document).ready(function()
-{     
+{
     try
     {
-         $('#orders').on('click', 'li div div #decrease_btn', function (event) 
+         $('#orders').on('click', 'li div div #decrease_btn', function (event)
          {
             //alert("decrease_btn");
             $("#submit_btn").removeClass("disabledbutton");
@@ -1319,19 +1323,19 @@ $(document).ready(function()
             var quanbox = $('#orders li div #val');
             var pricebox = $('#orders li #pricebox h4');
             var discount = $('#orders li #discounted_amount h4');
-             
+
             var currentquan =  parseInt(quanbox.get(roww).value);
             var currentprice =  parseInt(pricebox.get(roww).innerHTML+" Rs");
             var currentdiscount = parseInt(discount.get(roww).innerHTML+" Rs");
 
             //alert(currentdiscount);
-             
+
             var increamentquan = currentquan - 1;
             var newprice =  (currentprice/currentquan) * (increamentquan);
             var newdiscount = (currentdiscount/currentquan) * (increamentquan);
 
             //alert(newdiscount);
-             
+
             if(increamentquan > 0)
             {
                 quanbox.get(roww).value = increamentquan;
@@ -1340,21 +1344,21 @@ $(document).ready(function()
                 calculatetotal();
             }
 
-        }); 
+        });
 
-        $('#orders').on('click', 'li div div #increase_btn', function (event) 
+        $('#orders').on('click', 'li div div #increase_btn', function (event)
         {
             //alert("increase_btn");
             $("#submit_btn").removeClass("disabledbutton");
             $("#bill_btn").addClass("disabledbutton");
             $("#tender_btn").addClass("disabledbutton");
-            var list = this.parentNode.parentNode.parentNode;                   
+            var list = this.parentNode.parentNode.parentNode;
             var roww = $(list).index();
             //alert(roww);
             var quanbox = $('#orders li div #val');
-            var pricebox = $('#orders li #pricebox h4'); 
+            var pricebox = $('#orders li #pricebox h4');
             var discount = $('#orders li #discounted_amount h4');
-            
+
             var currentquan =  parseInt(quanbox.get(roww).value);
             var currentprice =  parseInt(pricebox.get(roww).innerHTML+" Rs");
             var currentdiscount = parseInt(discount.get(roww).innerHTML+" Rs");
@@ -1363,9 +1367,9 @@ $(document).ready(function()
             var increamentquan = currentquan + 1;
             var newprice =  (currentprice/currentquan) * (increamentquan);
             var newdiscount = (currentdiscount/currentquan) * (increamentquan);
-            
+
             //alert(newdiscount);
-            
+
             if(increamentquan > 0)
             {
                 quanbox.get(roww).value = increamentquan;
@@ -1373,7 +1377,7 @@ $(document).ready(function()
                 discount.get(roww).innerHTML = newdiscount+" Rs";
                 calculatetotal();
             }
-        }); 
+        });
     }
     catch(err)
     {
@@ -1390,14 +1394,14 @@ function calculatetotal()
     {
         //document.getElementById("submit_Btn").disabled = false;
 
-        var totalprice = 0; 
+        var totalprice = 0;
         var totaldiscout = 0;
         var pricebox = $('#orders li #pricebox h4');
         var discount = $('#orders li #discounted_amount h4');
-        
+
         //alert(pricebox.length);
         for(var i = 0;i<pricebox.length;i++)
-        {    
+        {
             var eachprice = parseInt(pricebox.get(i).innerHTML);
             var eachdiscount = parseInt(discount.get(i).innerHTML);
             totalprice += eachprice;
@@ -1406,8 +1410,10 @@ function calculatetotal()
 
         //alert(totalprice);
 
-        $('#totaltxt').html(totalprice + " Rs");  
-        $('#discounttxt').html(totaldiscout + " Rs");  
+        $('#totaltxt').html(totalprice + " Rs");
+        //var discounted_amount = parseInt(totalprice) - parseInt(totaldiscout);
+        //alert(discounted_amount);
+        $('#discounttxt').html(totaldiscout + " Rs");
     }
     catch(err)
     {
@@ -1426,15 +1432,15 @@ function getProducts(cat_id)
         $.ajax( { type : 'POST',
                   data : { SendCatId:cat_id},
                   url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
-                  success : function ( data ) 
+                  success : function ( data )
                   {
                         //alert(data);
                         var temp2 = JSON.parse(data);
                         //alert(temp2);
-                        document.getElementById("products_tb").innerHTML = "";                         
+                        document.getElementById("products_tb").innerHTML = "";
                         //$("#products_tb").append('<li class="list-group-item row">  <div class="col-md-12"><h4 class="list-group-item-heading"><center>Products</center></h4></div></li>');
                         for(var i=0; i <temp2.length; i++)
-                        {    
+                        {
                             $("#products_tb").append('<li class="list-group-item row ordered-items"><div class="col-md-10" onclick="appendOrders(\'' + temp2[i].p_name + '\', '+temp2[i].p_id+', '+temp2[i].p_price+', '+temp2[i].discount_percent+', '+1+', '+4+', '+temp2[i].cat_id+')"><h4 class="list-group-item-heading"> '+ temp2[i].p_name +' <small class="list-group-item-text">  <span class="badge pull-right">'+temp2[i].p_price+' Rs</span> </small></h4> </div></li>');
                             //$("#products_tb").append('<tr onclick="appendOrders(\'' + temp2[i].p_name + '\','+temp2[i].p_id+','+temp2[i].p_price+','+1+')"><td>'+ temp2[i].p_name +'</td></tr>');
                             //alert(temp2[i].p_name);
@@ -1447,10 +1453,10 @@ function getProducts(cat_id)
                         //window.location.href = '';
                         //<=== VALUE RETURNED FROM FUNCTION.
                 },
-                error: function ( xhr ) 
+                error: function ( xhr )
                 {
                     //alert( "error" );
-                }   
+                }
             });
     }
     catch(err)
@@ -1469,22 +1475,22 @@ function getbill()
         //alert("Bill Generated!");
         //alert("WP_ID: "+workperiod_id);
         //alert("CUST_ID: "+cust_id);
-        
+
         //alert(cust_id);
-        
+
         $("#tender_btn").removeClass("disabledbutton");
-        
+
         $.ajax( { type : 'POST',
                   data : { 'workperiod_id_bill':workperiod_id, 'cust_id_bill':cust_id },
                   url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
-                  success: function ( data ) 
-                  {            
+                  success: function ( data )
+                  {
                         //window.location.reload(true);
                         add_customer();
                         //printCustomerReceipt();
                         //console.log(data);
                   },
-                  error: function ( xhr ) 
+                  error: function ( xhr )
                   {
                         //console.log(xhr);
                   }
@@ -1532,7 +1538,7 @@ function getdamagedata()
 
 //Check For Order Paid Amount Range
 
-function integerInRange(row, value, min, max) 
+function integerInRange(row, value, min, max)
 {
     try
     {
@@ -1592,11 +1598,11 @@ function checkdamagelist()
         var damage_qty = $('#damage-orders tr td #damage_qty');
         //var prod_ids = $('#damage-orders tr #p_id');
         //alert(damage_qty.get(0).value);
-        var damage_qty_arr = [];  
+        var damage_qty_arr = [];
 
         for (var i = 0; i < count; i++)
         {
-            if(checks.get(i).checked)  
+            if(checks.get(i).checked)
             {
                 //alert("in if");
                 var quan = damage_qty.get(i).value;
@@ -1612,14 +1618,14 @@ function checkdamagelist()
             $.ajax( { type : 'POST',
                       data : { damage_qty_data:JSON.stringify(damage_qty_arr)},
                       url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
-                      success: function ( data ) 
+                      success: function ( data )
                       {
                             //alert( data );
                             document.getElementById("myModal_damage").style.display = "none";
                             startOrder(1);
                             //alert("sads");// <=== VALUE RETURNED FROM FUNCTION.
                       },
-                      error: function ( xhr ) 
+                      error: function ( xhr )
                       {
                             //alert( "error" );
                       }
@@ -1636,13 +1642,13 @@ function checkdamagelist()
 //Tender Order Function
 
 function tender()
-{     
+{
     try
     {
          $.ajax( { type : 'POST',
                    data : { 'period_id_settle':workperiod_id},
                    url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
-                   success: function ( data ) 
+                   success: function ( data )
                    {
                         $('#myModal_waiters').modal('hide');
                         //alert(data);
@@ -1654,28 +1660,28 @@ function tender()
                         alert("Order Ended Succesfully!");
                         $("#tender_btn").addClass('disabledbutton');
                         $("#bill_btn").addClass('disabledbutton');
-                        
+
                         $("#orders").html('');
                         $("#totaltxt").html('');
                         $("#discounttxt").html('');
-                       
+
                         cust_id = new Date().valueOf();
-                       
+
                         //alert("New Customer Created!");
-                       
+
                         $("#new_order_btn").addClass('disabledbutton');
                         $("#start_btn").removeClass('disabledbutton');
                         $("#main").addClass('disabledbutton');
-                       
+
                         window.location.reload(true);
-                       
+
 
                     },
-                    error: function ( xhr ) 
+                    error: function ( xhr )
                     {
                         //alert( "error" );
                     }
-                });        
+                });
     }
     catch(err)
     {
@@ -1695,10 +1701,10 @@ function insertDiscount(discount_price, total_price)
          $.ajax( { type : 'POST',
                    data : { wPeriod_id_discount:workperiod_id, discountprice:discount_price, totalprice:total_price},
                    url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
-                   success: function ( data ) 
+                   success: function ( data )
                    {
                    },
-                   error: function ( xhr ) 
+                   error: function ( xhr )
                    {
                         //alert( "error" );
                    }
@@ -1720,13 +1726,13 @@ function add_product_to_order(quantity, status)
         $.ajax( { type : 'POST',
                    data : { searched_barcode:barcode_value },
                    url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
-                   success: function ( data ) 
+                   success: function ( data )
                    {
                        //alert(data);
                        var data = JSON.parse(data);
                        //alert(data[0].p_price);
                        for(var i = 0; i < data.length; i++)
-                       { 
+                       {
                            //alert("NAME: "+data[i].p_name);
                            //alert("P ID: "+data[i].p_id);
                            //alert("P PRICE: "+data[i].p_price);
@@ -1737,11 +1743,11 @@ function add_product_to_order(quantity, status)
                        }
                        //appendOrders(product_name, product_id, product_price, product_quantity, product_id is 0 by default, product_category)
                    },
-                   error: function ( xhr ) 
+                   error: function ( xhr )
                    {
                         //alert( "error" );
                    }
-                }); 
+                });
     }
     catch(err)
     {
@@ -1760,22 +1766,22 @@ function add_customer()
         //$("#modal_customer").modal();
         var customer_name = $('#customer_name').val();
         var customer_contact = $('#customer_contact').val();
-        
+
         //alert(customer_name);
         //alert(customer_contact);
         //alert(cust_id);
-        
+
         //var fields_validation = validateForm();
         //alert(fields_validation);
-        
+
         if(customer_name != null || customer_name != "" || customer_contact != null || customer_contact != "")
         {
             //alert(customer_name);
-            
+
             $.ajax( {  type : 'POST',
                        data : { customername:customer_name, customercontact:customer_contact, customerid:cust_id },
                        url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
-                       success : function ( data ) 
+                       success : function ( data )
                        {
 
                            getbill();
@@ -1784,10 +1790,10 @@ function add_customer()
                            //var data = JSON.parse(data);
 
                            //alert(data);
-                           
+
                            //alert(data[0].p_price);
                            //for(var i = 0; i < data.length; i++)
-                           //{ 
+                           //{
                                //alert("NAME: "+data[i].p_name);
                                //alert("P ID: "+data[i].p_id);
                                //alert("P PRICE: "+data[i].p_price);
@@ -1798,11 +1804,11 @@ function add_customer()
                            //}
                            //appendOrders(product_name, product_id, product_price, product_quantity, product_id is 0 by default, product_category)
                        },
-                       error: function ( xhr ) 
+                       error: function ( xhr )
                        {
                             //alert( "error" );
                        }
-                    }); 
+                    });
         }
         else
         {
@@ -1818,13 +1824,13 @@ function add_customer()
 
 // Add Customer Name
 
-// Validated Customer Form Fields 
+// Validated Customer Form Fields
 
 //function validateForm()
 //{
 //    var customer_name = document.getElementById("customer_name").value;
 //    var customer_contact = document.getElementById("customer_contact").value;
-//    
+//
 //    if ((customer_name == null || customer_name == "") || (customer_contact == null || customer_contact == ""))
 //    {
 //      //alert("Please fill all required fields");
@@ -1849,7 +1855,7 @@ function showErrorMessageToUser()
         $('#box').addClass("display_error");
     });
     return false;
-} 
+}
 
 function hideErrorMessageFromUser()
 {
@@ -1858,4 +1864,3 @@ function hideErrorMessageFromUser()
         $('#overlay').fadeOut('fast');
     });
 }
-        
