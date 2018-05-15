@@ -1428,29 +1428,19 @@ function getProducts(cat_id)
 {
     try
     {
-        //alert(cat_id);
         $.ajax( { type : 'POST',
                   data : { SendCatId:cat_id},
                   url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
                   success : function ( data )
                   {
-                        //alert(data);
                         var temp2 = JSON.parse(data);
-                        //alert(temp2);
                         document.getElementById("products_tb").innerHTML = "";
-                        //$("#products_tb").append('<li class="list-group-item row">  <div class="col-md-12"><h4 class="list-group-item-heading"><center>Products</center></h4></div></li>');
+
                         for(var i=0; i <temp2.length; i++)
                         {
-                            $("#products_tb").append('<li class="list-group-item row ordered-items"><div class="col-md-10" onclick="appendOrders(\'' + temp2[i].p_name + '\', '+temp2[i].p_id+', '+temp2[i].p_price+', '+temp2[i].discount_percent+', '+1+', '+4+', '+temp2[i].cat_id+')"><h4 class="list-group-item-heading"> '+ temp2[i].p_name +' <small class="list-group-item-text">  <span class="badge pull-right">'+temp2[i].p_price+' Rs</span> </small></h4> </div></li>');
-                            //$("#products_tb").append('<tr onclick="appendOrders(\'' + temp2[i].p_name + '\','+temp2[i].p_id+','+temp2[i].p_price+','+1+')"><td>'+ temp2[i].p_name +'</td></tr>');
-                            //alert(temp2[i].p_name);
+                            $("#products_tb").append('<li class="list-group-item row ordered-items"><div class="col-md-10" onclick="appendOrders(\'' + temp2[i].p_name + '\', '+temp2[i].p_id+', '+temp2[i].p_price+', '+temp2[i].discount_percent+', '+1+', '+4+', '+temp2[i].cat_id+')"><h4 class="list-group-item-heading categories-title"> '+ temp2[i].p_name +' <small class="list-group-item-text">  <span class="badge pull-right">'+temp2[i].p_price+' Rs</span> </small></h4> </div></li>');
                         }
 
-                        //alert(temp2.length);
-                        //temp2 = "";
-                        //alert(temp2);
-
-                        //window.location.href = '';
                         //<=== VALUE RETURNED FROM FUNCTION.
                 },
                 error: function ( xhr )

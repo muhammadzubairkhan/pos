@@ -467,7 +467,7 @@ html {
 <!-- Top Navigation: Left Menu -->
 
 <ul class="nav navbar-nav navbar-left navbar-top-links">
-    <li><a href="javascript:void(0);"><i class="fa fa-home fa-fw"></i> Home</a></li>
+    <li><a href="home.php"><i class="fa fa-home fa-fw"></i> Home</a></li>
 </ul>
 
         <button type="submit" id="start_btn" onclick="startPeriod();" class="btn btn-sm btn-success waves-effect waves-light">START WORK PERIOD</button>
@@ -520,8 +520,8 @@ html {
                             <li class="list-group-item row waiters">
 
                               <div class="col-md-12">
-                                  <h4 class="list-group-item-heading"><a href="#"><?php echo $r['name'] ?></a></h4>
-                                  <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+                                  <h4 class="list-group-item-heading"><a href="#" class="categories-title"><?php echo $r['name'] ?></a></h4>
+                                  <small><span class="glyphicon glyphicon-chevron-right pull-right"></span></small>
                               </div>
 
                             </li>
@@ -594,7 +594,7 @@ html {
 
                         </ul>
 
-                        <form class="form-inline barcode-form" onsubmit="return false;">
+                       <!--  <form class="form-inline barcode-form" onsubmit="return false;">
 
                               <div class="form-group">
                                    <div class="col-md-3">
@@ -604,7 +604,7 @@ html {
 
                               <button class="btn btn-default" onclick="add_product_to_order(1, 4);">Add</button>
 
-                        </form>
+                        </form> -->
 
                         <ul class="list-group">
 
@@ -640,7 +640,7 @@ html {
                                 <li class="list-group-item row">
 
                                   <div class="col-md-6">
-                                      <h4 class="list-group-item-heading">TOTAL DISCOUNTED AMOUNT</h4>
+                                      <h4 class="list-group-item-heading">Discounted Amount</h4>
                                   </div>
 
                                   <div class="col-md-6 pull-right">
@@ -652,7 +652,7 @@ html {
                                 <li class="list-group-item row">
 
                                   <div class="col-md-6">
-                                      <h4 class="list-group-item-heading">TOTAL AMOUNT</h4>
+                                      <h4 class="list-group-item-heading">Total Amount</h4>
                                   </div>
 
                                   <div class="col-md-6 pull-right">
@@ -723,7 +723,7 @@ html {
                         <ul class="list-group scroll_waiters">
 
                            <?php
-                  $getData = "SELECT * FROM menu_categories";
+                                $getData = "SELECT * FROM menu_categories";
                                 $qur = $conn->query($getData);
 
                                 while($r = mysqli_fetch_assoc($qur)){
@@ -731,10 +731,9 @@ html {
                             <li class="list-group-item row ordered-items" onclick="getProducts(<?php echo $r['category_id'] ?>);">
 
                               <div class="col-md-12">
-                                    <h4 class="list-group-item-heading">
+                                    <h4 class="list-group-item-heading categories-title">
                                         <?php echo $r['cat_name'] ?>
-                                        <span class="glyphicon glyphicon-chevron-right pull-right"></span>
-
+                                        <small><span class="glyphicon glyphicon-chevron-right pull-right"></span></small>
                                     </h4>
                               </div>
 
@@ -781,9 +780,9 @@ html {
                             <li class="list-group-item row ordered-items">
 
                               <div class="col-md-10" onclick="appendOrders('<?php echo $r['p_name'] ?>', <?php echo $r['p_id'] ?>, <?php echo $r['p_price'] ?>, <?php echo $r['discount_percent'] ?>, 1, 4, <?php echo $r['cat_id'] ?>)">
-                                    <h4 class="list-group-item-heading">
+                                    <h4 class="list-group-item-heading categories-title">
                                         <?php echo $r['p_name'] ?>
-                                        <small class="list-group-item-text">
+                                        <small class="list-group-item-text categories-title">
                                               <span class="badge pull-right"><?php echo $r['p_price']." Rs" ?></span>
                                         </small>
                                     </h4>
