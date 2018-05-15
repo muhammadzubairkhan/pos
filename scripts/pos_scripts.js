@@ -211,7 +211,9 @@ function startPeriod()
         {
                //cust_id =  "<?php echo base_convert(time(), 10, 36); ?>";
 
-               cust_id = new Date().valueOf();
+               //cust_id = new Date().valueOf();
+               cust_id = Math.floor(1000 + Math.random() * 9000);
+               //cust_id = cust_id.substring(0,4);
 
                $.ajax( { type : 'POST',
                          data : { startwork:true },
@@ -463,7 +465,9 @@ function newOrder()
         $("#new_order_btn").addClass('disabledbutton');
         $("#start_btn").removeClass('disabledbutton');
 
-        cust_id = new Date().valueOf(); //"<?php echo base_convert(time(), 10, 36); ?>";
+        //cust_id = new Date().valueOf(); //"<?php echo base_convert(time(), 10, 36); ?>";
+        //cust_id = cust_id.substring(0,4);
+        cust_id = Math.floor(1000 + Math.random() * 9000);
         //alert(cust_id);
         orderData = [];
         //alert(orderData.length);
@@ -639,8 +643,9 @@ function startOrder(status)
                          //var discounted_amount = (discounted_price/100)*price;
                          //discounted_price = price - discounted_amount;
 
-                         cust_id = data[0].customer_id;
+                         //cust_id = data[0].customer_id;
                          //alert("In Start Order Customer ID: "+cust_id);
+                         cust_id = Math.floor(1000 + Math.random() * 9000);
 
                          //printKitchenReceipt(custid,tableid);
                          //$("#orders").html("");
@@ -689,7 +694,9 @@ function startOrder(status)
            //$("#fourth_div").removeClass("disabledbutton");
            //$('.services').addClass('hidden');
 
-           cust_id = new Date().valueOf(); //"<?php echo base_convert(time(), 10, 36); ?>";
+           //cust_id = new Date().valueOf(); //"<?php echo base_convert(time(), 10, 36); ?>";
+           //cust_id = cust_id.substring(0,4);
+           cust_id = Math.floor(1000 + Math.random() * 9000);
            //waiterid = waiter_id;
            //serviceNum = service_Num;
            disableAll();
@@ -935,7 +942,9 @@ function submitorder()
         if(cust_id == "")
         {
             //alert("Customer ID: "+cust_id);
-            cust_id = new Date().valueOf();
+            //cust_id = new Date().valueOf();
+            //cust_id = cust_id.substring(0,4);
+            cust_id = Math.floor(1000 + Math.random() * 9000);
             //alert("New Customer Created!");
         }
 
@@ -1655,7 +1664,9 @@ function tender()
                         $("#totaltxt").html('');
                         $("#discounttxt").html('');
 
-                        cust_id = new Date().valueOf();
+                        //cust_id = new Date().valueOf();
+                        //cust_id = cust_id.substring(0, 4);
+                        cust_id = Math.floor(1000 + Math.random() * 9000);
 
                         //alert("New Customer Created!");
 
