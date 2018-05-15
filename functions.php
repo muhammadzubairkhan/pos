@@ -170,7 +170,6 @@ else if(isset($_POST['prodname']) && isset($_POST['prodprice']) && isset($_POST[
     if ($conn->query($sql) === TRUE)
     {
         echo 'Product added successfully!';
-        location.replace("items.php");
     }
 }
 

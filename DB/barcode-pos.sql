@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2018 at 12:08 PM
+-- Generation Time: May 15, 2018 at 07:33 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -156,7 +156,7 @@ CREATE TABLE `pos_config` (
 --
 
 INSERT INTO `pos_config` (`id`, `company_name`, `company_image`, `company_pdf_image`, `is_deleted`, `last_updated`) VALUES
-(1, 'Pizza Yumm\'s', 'icons/pos_logo.png', 'reports/logo.png', '0', '2017-05-22 12:18:52');
+(1, 'PIZZA YUMM\'S (Malir Cantt Branch)', 'icons/pos_logo.png', 'reports/logo.png', '0', '2017-05-22 12:18:52');
 
 -- --------------------------------------------------------
 
@@ -177,7 +177,7 @@ CREATE TABLE `pos_printer` (
 --
 
 INSERT INTO `pos_printer` (`id`, `printer_name`, `printer_ip`, `printer_port`, `last_updated`) VALUES
-(1, 'POS9', '172.16.1.244', '9100', '2017-05-25 14:11:09');
+(1, 'POS80', '172.16.1.244', '9100', '2017-05-25 14:11:09');
 
 -- --------------------------------------------------------
 
@@ -247,6 +247,13 @@ CREATE TABLE `work_periods` (
   `workperiod_id` int(20) NOT NULL,
   `status` int(5) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `work_periods`
+--
+
+INSERT INTO `work_periods` (`workperiod_id`, `status`) VALUES
+(1, 0);
 
 --
 -- Indexes for dumped tables
@@ -410,7 +417,7 @@ ALTER TABLE `pos_printer`
 -- AUTO_INCREMENT for table `work_periods`
 --
 ALTER TABLE `work_periods`
-  MODIFY `workperiod_id` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `workperiod_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

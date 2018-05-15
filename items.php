@@ -308,7 +308,7 @@ include_once "include/session.php";
                          },
                          error: function ( xhr )
                          {
-                            //alert( "error" );
+                            alert("Error Occurred!");
                          }
                     });
          });
@@ -318,13 +318,9 @@ include_once "include/session.php";
     {
         var prod_name =  $('#prod_name').val();
         var prod_price =  $('#prod_price').val();
-        var prod_code =  0;//$('#prod_code').val();
+        var prod_code =  0;
         var prod_discount =  $('#prod_discount').val();
-        var prod_barcode =  0;//$('#prod_barcode').val();
-
-        alert(prod_name);
-        alert(prod_price);
-        alert(prod_discount);
+        var prod_barcode =  0;
 
         var e = document.getElementById("categories");
         var cat_id = e.options[e.selectedIndex].value;
@@ -335,171 +331,135 @@ include_once "include/session.php";
                      success: function ( data )
                      {
                         alert(data);
-                        //window.location.href = '';
-
-                        // <=== VALUE RETURNED FROM FUNCTION.
+                        window.location.href = '';
                      },
                      error: function ( xhr )
                      {
-                        //alert( "error" );
+                        alert("Error occurred!");
                      }
                   });
     }
 
-    function showAjaxModal(id){
+    function showAjaxModal(id)
+    {
+        var name = $('#td_0213_'+id).html();
+        var price = $('#td_0211_'+id).html();
+        var code = 0;//$('#td_0214_'+id).html();
+        var discount = $('#td_0210_'+id).html();
+        var barcode = 0;//$('#td_0212_'+id).html();
 
+        $('#exampleModalLong').modal('show');
+        $('#exampleModalLong').find('#prod_name').val(name);
+        $('#exampleModalLong').find('#prod_price').val(price);
+        $('#exampleModalLong').find('#prod_discount').val(discount);
 
-//
-//                var getValue = document.getElementById('1').value;
-//                console.log(getValue);
-//                alert(getValue);
-
-                //alert(id);
-
-                var name = $('#td_0213_'+id).html();
-                var price = $('#td_0211_'+id).html();
-                var code = 0;//$('#td_0214_'+id).html();
-                var discount = $('#td_0210_'+id).html();
-                var barcode = 0;//$('#td_0212_'+id).html();
-                   //alert(name);
-                $('#exampleModalLong').modal('show');
-                $('#exampleModalLong').find('#prod_name').val(name);
-                $('#exampleModalLong').find('#prod_price').val(price);
-                $('#exampleModalLong').find('#prod_discount').val(discount);
-
-
-
-                $('#exampleModalLong').find('#sumit_btn').click(function(){
-
-
+                $('#exampleModalLong').find('#sumit_btn').click(function()
+                {
                    name = $('#exampleModalLong').find('#prod_name').val();
                    price =  $('#exampleModalLong').find('#prod_price').val();
                    code =  0;//$('#exampleModalLong').find('#prod_code').val();
                    discount =  $('#exampleModalLong').find('#prod_discount').val();
                    barcode =  0;//$('#exampleModalLong').find('#prod_barcode').val();
 
-//                   alert(name);
-//                   alert(price);
-//                   alert(id);
-//                   alert(barcode);
-       $.ajax( { type : 'POST',
-          data : { prod_name:name, prod_price:price, prod_code:code, proddiscount: discount, p_id:id, prodbarcode:barcode },
-          url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
-          success: function ( data ) {
-
-            alert(data);
-         //   window.location.href = '';
-
-
-              // <=== VALUE RETURNED FROM FUNCTION.
-          },
-          error: function ( xhr ) {
-            //alert( "error" );
-          }
-        });
-
-
-
-                });
-
-
-
-
-//
-//
-                // $('#exampleModalLong').html("aaaaaaaaaaaaaaa");
-
-
-            }
-
-            function showConfirmModal(id)
-            {
-                 $('#confirmmodal').modal('show');
-                 $('#confirmmodal').find('#delete_btn_yes').click(function()
-                 {
-                       $.ajax({ type : 'POST',
-                                data : { productidfordelete:id},
-                                url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
-                                success: function ( data )
-                                {
-                                   window.location.href = '';
-                                   // <=== VALUE RETURNED FROM FUNCTION.
-                                },
-                                error: function ( xhr )
-                                {
-                                   //alert( "error" );
-                                }
-                              });
-                });
-            }
-
-        </script>
-
-        <style type="text/css">
-
-
-            .resultItem
-            {
-                padding 8px;::;
-            }
-
-            .Scanner
-            {
-                background-color: lightgreen;
-            }
-
-            .Keyboard
-            {
-                background-color: lightgreen;
-            }
-
-            #resultsList div:first-of-type
-            {
-                border: 1px solid black;
-                padding: 10px;
-            }
-
-            #myInput
-            {
-                background-image: url('icons/searchicon.png'); /* Add a search icon to input */
-                background-position: 10px 12px; /* Position the search icon */
-                background-repeat: no-repeat; /* Do not repeat the icon image */
-                width: 100%; /* Full-width */
-                font-size: 16px; /* Increase font-size */
-                padding: 12px 20px 12px 40px; /* Add some padding */
-                border: 1px solid #ddd; /* Add a grey border */
-                margin-bottom: 12px; /* Add some space below the input */
-            }
-
-
-
-        </style>
-
-        <script type="text/javascript">
-            function myFunction()
-            {
-              // Declare variables
-              var input, filter, table, tr, td, i;
-              input = document.getElementById("myInput");
-              filter = input.value.toUpperCase();
-              table = document.getElementById("myTable");
-              tr = table.getElementsByTagName("tr");
-
-              // Loop through all table rows, and hide those who don't match the search query
-              for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[0];
-                if (td) {
-                  if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                  } else {
-                    tr[i].style.display = "none";
+               $.ajax( { type : 'POST',
+                  data : { prod_name:name, prod_price:price, prod_code:code, proddiscount: discount, p_id:id, prodbarcode:barcode },
+                  url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
+                  success: function ( data ) {
+                    alert(data);
+                  },
+                  error: function ( xhr ) {
+                    alert( "Error Occurred!" );
                   }
-                }
-              }
-            }
-        </script>
+                });
+            });
+    }
 
-    </head>
+    function showConfirmModal(id)
+    {
+         $('#confirmmodal').modal('show');
+         $('#confirmmodal').find('#delete_btn_yes').click(function()
+         {
+               $.ajax({ type : 'POST',
+                        data : { productidfordelete:id},
+                        url  : 'functions.php',              // <=== CALL THE PHP FUNCTION HERE.
+                        success: function ( data )
+                        {
+                           window.location.href = '';
+                           // <=== VALUE RETURNED FROM FUNCTION.
+                        },
+                        error: function ( xhr )
+                        {
+                           //alert( "error" );
+                        }
+                      });
+        });
+    }
+
+</script>
+
+<style type="text/css">
+
+    .resultItem
+    {
+        padding 8px;::;
+    }
+
+    .Scanner
+    {
+        background-color: lightgreen;
+    }
+
+    .Keyboard
+    {
+        background-color: lightgreen;
+    }
+
+    #resultsList div:first-of-type
+    {
+        border: 1px solid black;
+        padding: 10px;
+    }
+
+    #myInput
+    {
+        background-image: url('icons/searchicon.png'); /* Add a search icon to input */
+        background-position: 10px 12px; /* Position the search icon */
+        background-repeat: no-repeat; /* Do not repeat the icon image */
+        width: 100%; /* Full-width */
+        font-size: 16px; /* Increase font-size */
+        padding: 12px 20px 12px 40px; /* Add some padding */
+        border: 1px solid #ddd; /* Add a grey border */
+        margin-bottom: 12px; /* Add some space below the input */
+    }
+
+</style>
+
+<script type="text/javascript">
+
+    function myFunction()
+    {
+      // Declare variables
+      var input, filter, table, tr, td, i;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+</script>
+
+</head>
 
 <body>
 
@@ -562,13 +522,11 @@ include_once "include/session.php";
             </div>
 
             <div class="modal-footer">
-              <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
               <button id="reset" class="btn btn-primary"><i class="glyphicon glyphicon-refresh"></i> Reset</button>
               <button type="button" class="btn btn-success" onclick="sendrequest();"><i class="glyphicon glyphicon-plus"></i> Add Product</button>
             </div>
                     <h2>Products' List</h2>
                     <div>
-
                         <div class="form-group">
                             <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for items..">
                         </div>
