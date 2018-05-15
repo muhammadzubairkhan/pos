@@ -128,10 +128,10 @@ try
     $printer -> setJustification(Printer::JUSTIFY_LEFT);
     //$printer -> feed(1);
     $printer -> text(new breakline("_____________________________"));
-    $total = new endreceipt("Total", '  ', $totalamount);
+    $total = new endreceipt("Amount", '  ', $totalamount);
     $printer -> text($total);
     $change = $givenamount - $total_discount;
-    $printer -> text(new endreceipt("Discount", '', $total_discount));
+    $printer -> text(new endreceipt("Total", '', $total_discount));
 //    $printer -> text($dis);
     $printer -> text(new endreceipt("Received", '', $givenamount));
 //    $printer -> text($total);
