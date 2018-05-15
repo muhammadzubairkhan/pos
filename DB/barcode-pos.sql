@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 15, 2018 at 07:33 PM
+-- Generation Time: May 15, 2018 at 08:38 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -104,6 +104,19 @@ CREATE TABLE `menu_categories` (
   `created_at` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `menu_categories`
+--
+
+INSERT INTO `menu_categories` (`category_id`, `cat_name`, `created_at`) VALUES
+(1, 'STARTERS & SALADS', NULL),
+(4, 'PASTA', NULL),
+(3, 'PIZZA FLAVORS', NULL),
+(5, 'BEVERAGES', NULL),
+(6, 'DEAL 1', NULL),
+(7, 'DEAL 2', NULL),
+(8, 'DEAL 3', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -119,6 +132,23 @@ CREATE TABLE `menu_products` (
   `p_barcode` varchar(255) NOT NULL,
   `is_available` varchar(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `menu_products`
+--
+
+INSERT INTO `menu_products` (`p_id`, `p_name`, `p_price`, `discount_percent`, `cat_id`, `p_barcode`, `is_available`) VALUES
+(1, '1 Lrg Pizza', '400', '0', '6', '0', NULL),
+(2, '2 Lrg Pizza', '800', '0', '7', '0', NULL),
+(3, '3 Lrg Pizza', '1100', '0', '8', '0', NULL),
+(4, 'Chilli Chicken Pasta', '350', '0', '4', '0', NULL),
+(5, 'Creamy Pasta', '350', '0', '4', '0', NULL),
+(7, 'Cheesy Garlic Bread', '120', '0', '1', '0', NULL),
+(8, 'Chicken Wings (6pcs)', '299', '0', '1', '0', NULL),
+(9, 'Chicken Pineapple Salad', '300', '0', '1', '0', NULL),
+(10, 'Sandwich Spicy Chicken', '250', '0', '1', '0', NULL),
+(11, 'Mexican Chicken Sandwich', '250', '0', '1', '0', NULL),
+(12, 'Garlic Bread Plain', '70', '0', '1', '0', NULL);
 
 -- --------------------------------------------------------
 
@@ -387,13 +417,13 @@ ALTER TABLE `manageinventory`
 -- AUTO_INCREMENT for table `menu_categories`
 --
 ALTER TABLE `menu_categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `menu_products`
 --
 ALTER TABLE `menu_products`
-  MODIFY `p_id` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `p_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `orders`
